@@ -81,4 +81,7 @@ function addEvent(evt) {
   return { success:true, event:newEvt };
 }
 
-module.exports = { listCities, listVenuesByCity, getVenue, listEventsByVenue, getEvent, addEvent, cities, venues, events };
+export { listCities, listVenuesByCity, getVenue, listEventsByVenue, getEvent, addEvent, cities, venues, events };
+
+// For CommonJS interop (in case any legacy code requires default export)
+export default { listCities, listVenuesByCity, getVenue, listEventsByVenue, getEvent, addEvent, cities, venues, events };
