@@ -1,4 +1,4 @@
-# Eventify — Front-end demo
+# Eventify
 
 This repository contains a small Next.js demo app for browsing venues and events. It is intentionally minimal and uses an in-memory data service so you can run it without a backend.
 
