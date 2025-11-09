@@ -65,7 +65,7 @@ export default function EventsPage() {
                     <div className="event-meta">{v?.name}{city ? ` — ${city.name}` : ''}{e.hasTicket ? ' • Ticketed' : ''}</div>
                   </div>
                   <div className="event-actions">
-                    <a href={'/city?id=' + (v?.id || '')} className="btn btn-ghost">View schedule</a>
+                    <a href={'/venue?id=' + (v?.id || '')} className="btn btn-ghost">View schedule</a>
                   </div>
                 </div>
               </article>

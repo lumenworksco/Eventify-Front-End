@@ -17,7 +17,7 @@ function VenueCard({ v }: { v: any }) {
         </ul>
       )}
       <div style={{marginTop:12}}>
-        <a href={'/city?id=' + v.id} className="btn btn-ghost" aria-label={`View schedule for ${v.name}`}>View schedule</a>
+        <a href={'/venue?id=' + v.id} className="btn btn-ghost" aria-label={`View schedule for ${v.name}`}>View schedule</a>
       </div>
     </article>
   );

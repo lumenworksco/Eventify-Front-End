@@ -35,7 +35,7 @@ function VenueSchedule({ venueId }: { venueId: string }) {
   );
 }
 
-export default function CityPage(props: any) {
+export default function VenuePage(props: any) {
   const searchParams = props?.searchParams as { id?: string } | undefined;
   const id = searchParams?.id || '';
   if (!id) return <div className="card">Venue id missing</div>;
