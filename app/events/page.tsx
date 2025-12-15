@@ -1,48 +1,96 @@
 "use client";
 import { useState } from 'react';
-import { events, venues, cities } from '../../services/data';
-
-function getVenue(vId: string) {
-  return venues.find((v: any) => v.id === vId);
-}
+import { useRouter } from 'next/navigation';
+import { useEvents, useCities, useEventTypes } from '../../hooks/useApi';
+import { useLanguage } from '../../context/LanguageContext';
+import { Venue } from '../../services/api';
+import EventCard from '../../components/EventCard';
+import LoadingSpinner from '../../components/LoadingSpinner';
+import ErrorMessage from '../../components/ErrorMessage';
 
 export default function EventsPage() {
   const [typeFilter, setTypeFilter] = useState('');
   const [cityFilter, setCityFilter] = useState('');
+  const router = useRouter();
+  const { t } = useLanguage();
 
-  const types = Array.from(new Set(events.map((e: any) => e.type).filter(Boolean)));
+  // Use SWR hooks for data fetching
+  const { data: events, error: eventsError, isLoading: eventsLoading, mutate: mutateEvents } = useEvents();
+  const { data: cities, error: citiesError, isLoading: citiesLoading } = useCities();
+  const { data: eventTypes, error: typesError } = useEventTypes();
 
-  const filtered = events
-    .filter((e: any) => (typeFilter ? e.type === typeFilter : true))
-    .filter((e: any) => {
-      if (!cityFilter) return true;
-      const v = getVenue(e.venueId);
-      return v?.cityId === cityFilter;
+  const isLoading = eventsLoading || citiesLoading;
+  const error = eventsError || citiesError;
+
+  // Use eventTypes from API, fallback to extracting from events
+  const types = eventTypes || (events ? Array.from(
+    new Set(
+      events
+        .map((e) => e.eventDescription?.eventType)
+        .filter((t): t is string => Boolean(t))
+    )
+  ) : []);
+
+  // Filter events
+  const filtered = (events || [])
+    .filter((e) => {
+      if (!typeFilter) return true;
+      return e.eventDescription?.eventType === typeFilter;
     })
-    .sort((a: any, b: any) => new Date(a.date).getTime() - new Date(b.date).getTime());
+    .filter((e) => {
+      if (!cityFilter) return true;
+      return e.venues?.some((v: Venue) => v.city.cityId === parseInt(cityFilter));
+    })
+    .sort((a, b) => new Date(a.eventDate).getTime() - new Date(b.eventDate).getTime());
+
+  // Callback for navigating to venue
+  function handleViewSchedule(venueId: number) {
+    router.push(`/venue/${venueId}`);
+  }
+
+  if (isLoading) {
+    return (
+      <div>
+        <h2>{t('events.title')}</h2>
+        <LoadingSpinner message={t('events.loading')} />
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div>
+        <h2>{t('events.title')}</h2>
+        <ErrorMessage 
+          message={error.message} 
+          onRetry={() => mutateEvents()}
+        />
+      </div>
+    );
+  }
 
   return (
     <div>
-      <h2>Events Overview</h2>
-      <p className="muted">Browse all upcoming events across venues. Use the filters to narrow results.</p>
+      <h2>{t('events.title')}</h2>
+      <p className="muted">{t('events.subtitle')}</p>
 
       <div className="card">
         <div className="controls">
           <div>
-            <label className="small">Filter by city</label>
+            <label className="small">{t('events.filterCity')}</label>
             <select value={cityFilter} onChange={(e) => setCityFilter(e.target.value)}>
-              <option value="">All cities</option>
-              {cities.map((c: any) => (
-                <option key={c.id} value={c.id}>{c.name}</option>
+              <option value="">{t('events.allCities')}</option>
+              {(cities || []).map((c) => (
+                <option key={c.cityId} value={c.cityId}>{c.name}</option>
               ))}
             </select>
           </div>
           <div>
-            <label className="small">Filter by type</label>
+            <label className="small">{t('events.filterType')}</label>
             <select value={typeFilter} onChange={(e) => setTypeFilter(e.target.value)}>
-              <option value="">All types</option>
-              {types.map((t: any) => (
-                <option key={t} value={t}>{t}</option>
+              <option value="">{t('events.allTypes')}</option>
+              {types.map((type) => (
+                <option key={type} value={type}>{type}</option>
               ))}
             </select>
           </div>
@@ -50,27 +98,16 @@ export default function EventsPage() {
       </div>
 
       {filtered.length === 0 ? (
-        <div className="card">No events found matching the filters.</div>
+        <div className="card">{t('events.noEvents')}</div>
       ) : (
-        <div className="grid" style={{marginTop:12}}>
-          {filtered.map((e: any) => {
-            const v = getVenue(e.venueId);
-            const city = cities.find((c: any) => c.id === v?.cityId);
-            return (
-              <article key={e.id} className="card">
-                <div className="event-row">
-                  <div className="event-date">{new Date(e.date).toLocaleString()}</div>
-                  <div className="event-info">
-                    <div className="event-title">{e.title}</div>
-                    <div className="event-meta">{v?.name}{city ? ` — ${city.name}` : ''}{e.hasTicket ? ' • Ticketed' : ''}</div>
-                  </div>
-                  <div className="event-actions">
-                    <a href={'/venue?id=' + (v?.id || '')} className="btn btn-ghost">View schedule</a>
-                  </div>
-                </div>
-              </article>
-            );
-          })}
+        <div className="grid" style={{ marginTop: 12 }}>
+          {filtered.map((event) => (
+            <EventCard 
+              key={event.eventId} 
+              event={event} 
+              onViewSchedule={handleViewSchedule}
+            />
+          ))}
         </div>
       )}
     </div>

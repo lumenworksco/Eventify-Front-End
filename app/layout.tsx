@@ -1,5 +1,7 @@
 import type { ReactNode } from 'react';
 import Layout from '../components/Layout';
+import { AuthProvider } from '../context/AuthContext';
+import { LanguageProvider } from '../context/LanguageContext';
 import './globals.css';
 
 export const metadata = {
@@ -14,7 +16,11 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en">
       <body>
-        <Layout>{children}</Layout>
+        <LanguageProvider>
+          <AuthProvider>
+            <Layout>{children}</Layout>
+          </AuthProvider>
+        </LanguageProvider>
       </body>
     </html>
   );
