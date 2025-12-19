@@ -1,21 +1,29 @@
 package be.ucll.fs.project.controller;
 
-import be.ucll.fs.project.dto.LoginRequest;
-import be.ucll.fs.project.dto.LoginResponse;
-import be.ucll.fs.project.dto.UserDTO;
-import be.ucll.fs.project.unit.model.City;
-import be.ucll.fs.project.unit.model.Role;
-import be.ucll.fs.project.unit.model.User;
-import be.ucll.fs.project.service.UserService;
-import be.ucll.fs.project.util.JwtUtil;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.validation.Valid;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
+import be.ucll.fs.project.dto.LoginRequest;
+import be.ucll.fs.project.dto.LoginResponse;
+import be.ucll.fs.project.dto.UserDTO;
+import be.ucll.fs.project.service.UserService;
+import be.ucll.fs.project.unit.model.City;
+import be.ucll.fs.project.unit.model.Role;
+import be.ucll.fs.project.unit.model.User;
+import be.ucll.fs.project.util.JwtUtil;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/users")
@@ -42,6 +50,32 @@ public class UserController {
         LoginResponse response = new LoginResponse(token, user.getUserId(), user.getName(), user.getRole().name());
         
         return ResponseEntity.ok(response);
+    }
+
+    @PostMapping("/register")
+    public ResponseEntity<LoginResponse> register(@Valid @RequestBody UserDTO userDTO) {
+        // Check if username already exists
+        try {
+            userService.getUserByName(userDTO.getName());
+            // If we get here, user exists
+            return ResponseEntity.status(HttpStatus.CONFLICT).build();
+        } catch (Exception e) {
+            // User doesn't exist, proceed with registration
+        }
+        
+        // Create new user with default role USER
+        City city = new City();
+        city.setCityId(userDTO.getCityId() != null ? userDTO.getCityId() : 1L); // Default to city 1 if not provided
+        User user = new User(userDTO.getName(), userDTO.getPassword(), 
+                            Role.USER, 
+                            userDTO.getLocation(), userDTO.getEventPreference(), city);
+        User createdUser = userService.createUser(user);
+        
+        // Generate token and return login response
+        String token = jwtUtil.generateToken(createdUser.getName(), createdUser.getUserId(), createdUser.getRole().name());
+        LoginResponse response = new LoginResponse(token, createdUser.getUserId(), createdUser.getName(), createdUser.getRole().name());
+        
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
     @GetMapping
@@ -115,6 +149,13 @@ public class UserController {
                             userDTO.getLocation(), userDTO.getEventPreference(), city);
         User updatedUser = userService.updateUser(id, user);
         return ResponseEntity.ok(updatedUser);
+    }
+
+    @PostMapping("/logout")
+    public ResponseEntity<Void> logout() {
+        // For JWT-based authentication, the token invalidation is handled client-side
+        // This endpoint confirms the logout request was received
+        return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/{id}")

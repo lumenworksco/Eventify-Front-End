@@ -1,16 +1,25 @@
 package be.ucll.fs.project.integration;
 
-import be.ucll.fs.project.dto.LoginRequest;
-import be.ucll.fs.project.dto.LoginResponse;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
-import org.springframework.http.*;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.test.context.ActiveProfiles;
 
-import static org.junit.jupiter.api.Assertions.*;
+import be.ucll.fs.project.dto.LoginRequest;
+import be.ucll.fs.project.dto.LoginResponse;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@ActiveProfiles("test")
 class UserIntegrationTest {
 
     @Autowired
@@ -19,7 +28,7 @@ class UserIntegrationTest {
     @Test
     void testLoginAndAccessProtectedEndpoint() {
         // Step 1: Login to get JWT token
-        LoginRequest loginRequest = new LoginRequest("Alice Johnson", "password123");
+        LoginRequest loginRequest = new LoginRequest("admin", "admin123");
         
         ResponseEntity<LoginResponse> loginResponse = restTemplate.postForEntity(
                 "/api/users/login",
@@ -47,7 +56,7 @@ class UserIntegrationTest {
 
         assertEquals(HttpStatus.OK, usersResponse.getStatusCode());
         assertNotNull(usersResponse.getBody());
-        assertTrue(usersResponse.getBody().contains("Alice Johnson"));
+        assertTrue(usersResponse.getBody().contains("admin"));
     }
 
     @Test
@@ -64,7 +73,7 @@ class UserIntegrationTest {
     @Test
     void testDifferentRolesBehavior() {
         // Test ADMIN role
-        LoginRequest adminLogin = new LoginRequest("Alice Johnson", "password123");
+        LoginRequest adminLogin = new LoginRequest("admin", "admin123");
         ResponseEntity<LoginResponse> adminResponse = restTemplate.postForEntity(
                 "/api/users/login",
                 adminLogin,
@@ -87,7 +96,7 @@ class UserIntegrationTest {
         assertTrue(adminUsersResponse.getBody().contains("password"));
 
         // Test USER role
-        LoginRequest userLogin = new LoginRequest("Charlie Brown", "password123");
+        LoginRequest userLogin = new LoginRequest("john", "john123");
         ResponseEntity<LoginResponse> userResponse = restTemplate.postForEntity(
                 "/api/users/login",
                 userLogin,

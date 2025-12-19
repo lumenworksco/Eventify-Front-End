@@ -1,14 +1,24 @@
 package be.ucll.fs.project;
 
-import be.ucll.fs.project.unit.model.*;
-import be.ucll.fs.project.repository.*;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.Arrays;
+
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.util.Arrays;
+import be.ucll.fs.project.repository.CityRepository;
+import be.ucll.fs.project.repository.EventDescriptionRepository;
+import be.ucll.fs.project.repository.EventRepository;
+import be.ucll.fs.project.repository.UserRepository;
+import be.ucll.fs.project.repository.VenueRepository;
+import be.ucll.fs.project.unit.model.City;
+import be.ucll.fs.project.unit.model.Event;
+import be.ucll.fs.project.unit.model.EventDescription;
+import be.ucll.fs.project.unit.model.Role;
+import be.ucll.fs.project.unit.model.User;
+import be.ucll.fs.project.unit.model.Venue;
 
 @Component
 public class DbInitializer implements CommandLineRunner {
@@ -44,11 +54,11 @@ public class DbInitializer implements CommandLineRunner {
         cityRepository.saveAll(Arrays.asList(brussels, antwerp, ghent));
 
         // Create Users with hashed passwords and different roles
-        User user1 = new User("Alice Johnson", passwordEncoder.encode("password123"), Role.ADMIN, "Brussels Downtown", "Music Concerts", brussels);
-        User user2 = new User("Bob Smith", passwordEncoder.encode("password123"), Role.ORGANIZER, "Antwerp Center", "Sports Events", antwerp);
-        User user3 = new User("Charlie Brown", passwordEncoder.encode("password123"), Role.USER, "Ghent Historic District", "Theater", ghent);
-        User user4 = new User("Diana Prince", passwordEncoder.encode("password123"), Role.USER, "Brussels", "Music Festivals", brussels);
-        userRepository.saveAll(Arrays.asList(user1, user2, user3, user4));
+        User admin = new User("admin", passwordEncoder.encode("admin123"), Role.ADMIN, "Brussels Downtown", "Music Concerts", brussels);
+        User jane = new User("jane", passwordEncoder.encode("jane123"), Role.ORGANIZER, "Antwerp Center", "Sports Events", antwerp);
+        User john = new User("john", passwordEncoder.encode("john123"), Role.USER, "Ghent Historic District", "Theater", ghent);
+        User diana = new User("diana", passwordEncoder.encode("diana123"), Role.USER, "Brussels", "Music Festivals", brussels);
+        userRepository.saveAll(Arrays.asList(admin, jane, john, diana));
 
         // Create Venues
         Venue venue1 = new Venue("AB Concert Hall", "Boulevard Anspach 110, Brussels", 2000, brussels);
