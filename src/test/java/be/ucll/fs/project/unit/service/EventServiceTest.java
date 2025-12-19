@@ -162,7 +162,7 @@ class EventServiceTest {
         assertNotNull(result);
         assertEquals("New Concert", result.getTitle());
         verify(venueService, times(1)).getVenueById(1L);
-        verify(eventRepository, times(1)).save(any(Event.class));
+        verify(eventRepository, times(2)).save(any(Event.class)); // Called twice: once to set venue, once to finalize
     }
 
     @Test
