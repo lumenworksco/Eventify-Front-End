@@ -22,10 +22,8 @@ async function fetcher<T>(url: string, token?: string): Promise<T> {
   if (token) {
     headers['Authorization'] = `Bearer ${token}`;
   }
-
   const response = await fetch(url, {
     headers,
-    credentials: 'include',
   });
 
   if (!response.ok) {
