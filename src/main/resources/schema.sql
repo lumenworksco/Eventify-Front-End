@@ -20,10 +20,15 @@ CREATE TABLE IF NOT EXISTS users (
     location VARCHAR(150),
     event_preference VARCHAR(150),
     city_id INTEGER NOT NULL,
+    preferred_city_id INTEGER,
     CONSTRAINT fk_user_city
         FOREIGN KEY (city_id)
         REFERENCES cities(city_id)
-        ON DELETE RESTRICT
+        ON DELETE RESTRICT,
+    CONSTRAINT fk_user_preferred_city
+        FOREIGN KEY (preferred_city_id)
+        REFERENCES cities(city_id)
+        ON DELETE SET NULL
 );
 
 -- =========================

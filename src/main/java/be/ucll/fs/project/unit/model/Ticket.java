@@ -1,7 +1,5 @@
 package be.ucll.fs.project.unit.model;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
@@ -11,7 +9,6 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "tickets")
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "ticketId")
 public class Ticket {
 
     @Id

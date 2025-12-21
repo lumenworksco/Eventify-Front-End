@@ -1,13 +1,11 @@
 package be.ucll.fs.project.unit.model;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "event_descriptions")
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "descriptionId")
 public class EventDescription {
 
     @Id
@@ -18,6 +16,7 @@ public class EventDescription {
     @NotNull(message = "Event is required")
     @OneToOne
     @JoinColumn(name = "event_id", nullable = false, unique = true)
+    @JsonBackReference
     private Event event;
 
     @Column(name = "event_type", length = 100)

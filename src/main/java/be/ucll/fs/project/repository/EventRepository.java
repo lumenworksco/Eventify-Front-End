@@ -19,7 +19,7 @@ public interface EventRepository extends JpaRepository<Event, Long> {
     
     List<Event> findByEventDateBetween(LocalDate startDate, LocalDate endDate);
     
-    @Query("SELECT e FROM Event e JOIN e.venues v WHERE v.city.cityId = :cityId")
+    @Query("SELECT DISTINCT e FROM Event e LEFT JOIN FETCH e.venues v WHERE v.city.cityId = :cityId")
     List<Event> findEventsByCityId(@Param("cityId") Long cityId);
     
     @Query("SELECT e FROM Event e WHERE e.eventDate >= :date ORDER BY e.eventDate ASC")

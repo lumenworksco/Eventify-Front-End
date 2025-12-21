@@ -1,14 +1,15 @@
 package be.ucll.fs.project.service;
 
-import be.ucll.fs.project.unit.model.City;
-import be.ucll.fs.project.unit.model.User;
-import be.ucll.fs.project.repository.UserRepository;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
+import be.ucll.fs.project.repository.UserRepository;
+import be.ucll.fs.project.unit.model.City;
+import be.ucll.fs.project.unit.model.User;
 
 @Service
 @Transactional
@@ -80,6 +81,14 @@ public class UserService {
             user.setCity(city);
         }
         
+        // Handle preferredCity update
+        if (userDetails.getPreferredCity() != null && userDetails.getPreferredCity().getCityId() != null) {
+            City preferredCity = cityService.getCityById(userDetails.getPreferredCity().getCityId());
+            user.setPreferredCity(preferredCity);
+        } else if (userDetails.getPreferredCity() == null) {
+            user.setPreferredCity(null);
+        }
+        
         // Hash the password if it's being updated
         if (userDetails.getPassword() != null && !userDetails.getPassword().isEmpty()) {
             String hashedPassword = passwordEncoder.encode(userDetails.getPassword());
@@ -96,5 +105,16 @@ public class UserService {
 
     public boolean verifyPassword(String rawPassword, String hashedPassword) {
         return passwordEncoder.matches(rawPassword, hashedPassword);
+    }
+
+    public User setPreferredCity(Long userId, Long cityId) {
+        User user = getUserById(userId);
+        if (cityId != null) {
+            City preferredCity = cityService.getCityById(cityId);
+            user.setPreferredCity(preferredCity);
+        } else {
+            user.setPreferredCity(null);
+        }
+        return userRepository.save(user);
     }
 }

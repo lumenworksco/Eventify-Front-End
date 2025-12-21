@@ -1,8 +1,6 @@
 package be.ucll.fs.project.unit.model;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import java.util.ArrayList;
@@ -10,7 +8,6 @@ import java.util.List;
 
 @Entity
 @Table(name = "cities")
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "cityId")
 public class City {
 
     @Id

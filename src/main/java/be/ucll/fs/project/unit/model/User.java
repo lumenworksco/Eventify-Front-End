@@ -1,14 +1,21 @@
 package be.ucll.fs.project.unit.model;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "users")
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "userId")
 public class User {
 
     @Id
@@ -39,6 +46,10 @@ public class User {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "city_id", nullable = false)
     private City city;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "preferred_city_id")
+    private City preferredCity;
 
     public User() {
     }
@@ -107,5 +118,13 @@ public class User {
 
     public void setRole(Role role) {
         this.role = role;
+    }
+
+    public City getPreferredCity() {
+        return preferredCity;
+    }
+
+    public void setPreferredCity(City preferredCity) {
+        this.preferredCity = preferredCity;
     }
 }

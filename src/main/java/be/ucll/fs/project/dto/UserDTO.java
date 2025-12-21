@@ -21,6 +21,8 @@ public class UserDTO {
     @NotNull(message = "City ID is required")
     private Long cityId;
 
+    private Long preferredCityId;
+
     public UserDTO() {
     }
 
@@ -76,5 +78,13 @@ public class UserDTO {
 
     public void setCityId(Long cityId) {
         this.cityId = cityId;
+    }
+
+    public Long getPreferredCityId() {
+        return preferredCityId;
+    }
+
+    public void setPreferredCityId(Long preferredCityId) {
+        this.preferredCityId = preferredCityId;
     }
 }
