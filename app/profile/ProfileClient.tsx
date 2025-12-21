@@ -1,7 +1,9 @@
 'use client';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useLanguage } from '../../context/LanguageContext';
 import { useAuth } from '../../context/AuthContext';
+import { api, City } from '../../services/api';
 
 interface UserProfile {
   userId: number;
@@ -10,6 +12,8 @@ interface UserProfile {
   location: string | null;
   eventPreference: string | null;
   cityName: string | null;
+  preferredCityId: number | null;
+  preferredCityName: string | null;
 }
 
 interface ProfileClientProps {
@@ -19,7 +23,36 @@ interface ProfileClientProps {
 
 export default function ProfileClient({ user, error }: ProfileClientProps) {
   const { t } = useLanguage();
-  const { logout } = useAuth();
+  const { logout, setPreferredCity: setAuthPreferredCity } = useAuth();
+  const [cities, setCities] = useState<City[]>([]);
+  const [selectedCityId, setSelectedCityId] = useState<number | null>(user?.preferredCityId || null);
+  const [saving, setSaving] = useState(false);
+  const [saveMessage, setSaveMessage] = useState<string | null>(null);
+
+  useEffect(() => {
+    api.getAllCities().then(setCities).catch(console.error);
+  }, []);
+
+  useEffect(() => {
+    if (user?.preferredCityId) {
+      setSelectedCityId(user.preferredCityId);
+    }
+  }, [user?.preferredCityId]);
+
+  const handleSavePreference = async () => {
+    if (!user) return;
+    setSaving(true);
+    setSaveMessage(null);
+    try {
+      await api.setPreferredCity(user.userId, selectedCityId);
+      setAuthPreferredCity(selectedCityId);
+      setSaveMessage(t('profile.preferencesSaved') || 'Preferences saved!');
+    } catch (err) {
+      setSaveMessage(t('profile.saveFailed') || 'Failed to save preferences');
+    } finally {
+      setSaving(false);
+    }
+  };
 
   if (error) {
     return (
@@ -114,6 +147,49 @@ export default function ProfileClient({ user, error }: ProfileClientProps) {
               {t('profile.eventPreference')}
             </label>
             <p style={{ margin: 0 }}>{user.eventPreference || t('profile.notSet')}</p>
+          </div>
+
+          <div style={{ marginBottom: '1.5rem', borderTop: '1px solid #e6edf3', paddingTop: '1rem' }}>
+            <label className="small muted" style={{ display: 'block', marginBottom: '0.5rem' }}>
+              {t('profile.preferredCity') || 'Preferred City for Home Page'}
+            </label>
+            <select
+              value={selectedCityId || ''}
+              onChange={(e) => setSelectedCityId(e.target.value ? Number(e.target.value) : null)}
+              style={{
+                width: '100%',
+                padding: '0.5rem',
+                borderRadius: '0.375rem',
+                border: '1px solid #d1d5db',
+                fontSize: '1rem',
+                marginBottom: '0.5rem'
+              }}
+            >
+              <option value="">{t('profile.noPreference') || 'No preference (show all)'}</option>
+              {cities.map(city => (
+                <option key={city.cityId} value={city.cityId}>
+                  {city.name}, {city.country}
+                </option>
+              ))}
+            </select>
+            <button 
+              onClick={handleSavePreference}
+              disabled={saving}
+              className="btn btn-primary"
+              style={{ width: '100%' }}
+            >
+              {saving ? (t('profile.saving') || 'Saving...') : (t('profile.savePreference') || 'Save Preference')}
+            </button>
+            {saveMessage && (
+              <p style={{ 
+                margin: '0.5rem 0 0 0', 
+                fontSize: '0.875rem', 
+                color: saveMessage.includes('Failed') ? '#ef4444' : '#22c55e',
+                textAlign: 'center'
+              }}>
+                {saveMessage}
+              </p>
+            )}
           </div>
         </div>
 

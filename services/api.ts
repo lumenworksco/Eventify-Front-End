@@ -50,6 +50,7 @@ export interface User {
   location: string | null;
   eventPreference: string | null;
   city: City;
+  preferredCity: City | null;
 }
 
 export interface Ticket {
@@ -118,6 +119,21 @@ export interface ApiError {
   status: number;
 }
 
+// Helper to get auth token from localStorage
+function getAuthToken(): string | null {
+  if (typeof window === 'undefined') return null;
+  try {
+    const authData = localStorage.getItem('eventify_auth');
+    if (authData) {
+      const parsed = JSON.parse(authData);
+      return parsed.token || null;
+    }
+  } catch {
+    // Ignore parse errors
+  }
+  return null;
+}
+
 class ApiService {
   private baseUrl: string;
 
@@ -127,15 +143,27 @@ class ApiService {
 
   private async request<T>(
     endpoint: string,
-    options: RequestInit = {}
+    options: RequestInit = {},
+    requiresAuth: boolean = false
   ): Promise<T> {
     const url = `${this.baseUrl}${endpoint}`;
+    
+    const headers: Record<string, string> = {
+      'Content-Type': 'application/json',
+      ...(options.headers as Record<string, string>),
+    };
+    
+    // Add Authorization header if authenticated request
+    if (requiresAuth) {
+      const token = getAuthToken();
+      if (token) {
+        headers['Authorization'] = `Bearer ${token}`;
+      }
+    }
+    
     const config: RequestInit = {
-      headers: {
-        'Content-Type': 'application/json',
-        ...options.headers,
-      },
       ...options,
+      headers,
     };
 
     try {
@@ -183,20 +211,20 @@ class ApiService {
     return this.request<City>('/cities', {
       method: 'POST',
       body: JSON.stringify(city),
-    });
+    }, true); // requires auth
   }
 
   async updateCity(id: number, city: CreateCityDTO): Promise<City> {
     return this.request<City>(`/cities/${id}`, {
       method: 'PUT',
       body: JSON.stringify(city),
-    });
+    }, true); // requires auth
   }
 
   async deleteCity(id: number): Promise<void> {
     return this.request<void>(`/cities/${id}`, {
       method: 'DELETE',
-    });
+    }, true); // requires auth
   }
 
   // ============================
@@ -219,20 +247,20 @@ class ApiService {
     return this.request<Venue>('/venues', {
       method: 'POST',
       body: JSON.stringify(venue),
-    });
+    }, true); // requires auth
   }
 
   async updateVenue(id: number, venue: CreateVenueDTO): Promise<Venue> {
     return this.request<Venue>(`/venues/${id}`, {
       method: 'PUT',
       body: JSON.stringify(venue),
-    });
+    }, true); // requires auth
   }
 
   async deleteVenue(id: number): Promise<void> {
     return this.request<void>(`/venues/${id}`, {
       method: 'DELETE',
-    });
+    }, true); // requires auth
   }
 
   // ============================
@@ -267,32 +295,32 @@ class ApiService {
     return this.request<Event>('/events', {
       method: 'POST',
       body: JSON.stringify(event),
-    });
+    }, true); // requires auth
   }
 
   async updateEvent(id: number, event: CreateEventDTO): Promise<Event> {
     return this.request<Event>(`/events/${id}`, {
       method: 'PUT',
       body: JSON.stringify(event),
-    });
+    }, true); // requires auth
   }
 
   async deleteEvent(id: number): Promise<void> {
     return this.request<void>(`/events/${id}`, {
       method: 'DELETE',
-    });
+    }, true); // requires auth
   }
 
   async addVenueToEvent(eventId: number, venueId: number): Promise<Event> {
     return this.request<Event>(`/events/${eventId}/venues/${venueId}`, {
       method: 'POST',
-    });
+    }, true); // requires auth
   }
 
   async removeVenueFromEvent(eventId: number, venueId: number): Promise<Event> {
     return this.request<Event>(`/events/${eventId}/venues/${venueId}`, {
       method: 'DELETE',
-    });
+    }, true); // requires auth
   }
 
   // ============================
@@ -323,13 +351,13 @@ class ApiService {
     return this.request<Ticket>('/tickets/purchase', {
       method: 'POST',
       body: JSON.stringify(ticket),
-    });
+    }, true); // requires auth
   }
 
   async cancelTicket(id: number): Promise<{ message: string }> {
     return this.request(`/tickets/${id}`, {
       method: 'DELETE',
-    });
+    }, true); // requires auth
   }
 
   // ============================
@@ -341,6 +369,17 @@ class ApiService {
       method: 'POST',
       body: JSON.stringify(data),
     });
+  }
+
+  async getUserById(userId: number): Promise<User> {
+    return this.request<User>(`/users/${userId}`, {}, true);
+  }
+
+  async setPreferredCity(userId: number, cityId: number | null): Promise<User> {
+    return this.request<User>(`/users/${userId}/preferred-city`, {
+      method: 'PUT',
+      body: JSON.stringify({ cityId }),
+    }, true);
   }
 }
 

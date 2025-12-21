@@ -12,6 +12,7 @@ export interface AuthUser {
   name: string;
   role: UserRole;
   token: string;
+  preferredCityId?: number | null;
 }
 
 interface AuthContextType {
@@ -22,6 +23,7 @@ interface AuthContextType {
   register: (name: string, password: string) => Promise<{ success: boolean; error?: string }>;
   logout: () => void;
   hasRole: (role: UserRole | UserRole[]) => boolean;
+  setPreferredCity: (cityId: number | null) => void;
 }
 
 // ============================
@@ -178,6 +180,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     return user.role === role;
   }, [user]);
 
+  const setPreferredCity = useCallback((cityId: number | null) => {
+    if (user) {
+      setUser({ ...user, preferredCityId: cityId });
+    }
+  }, [user]);
+
   const value: AuthContextType = {
     user,
     isLoading,
@@ -186,6 +194,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     register,
     logout,
     hasRole,
+    setPreferredCity,
   };
 
   return (

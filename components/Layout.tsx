@@ -35,6 +35,12 @@ export default function Layout({ children }: { children: ReactNode }) {
                   <Link href="/events/new">{t('nav.addEvent')}</Link>
                 </li>
               )}
+              {/* Only show Add Venue to ADMIN role */}
+              {isAuthenticated && hasRole(['ADMIN']) && (
+                <li className="nav-cta">
+                  <Link href="/venue/new">{t('nav.addVenue')}</Link>
+                </li>
+              )}
             </ul>
           </nav>
 

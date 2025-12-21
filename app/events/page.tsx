@@ -39,7 +39,7 @@ export default function EventsPage() {
     })
     .filter((e) => {
       if (!cityFilter) return true;
-      return e.venues?.some((v: Venue) => v.city.cityId === parseInt(cityFilter));
+      return e.venues?.some((v: Venue) => v?.city?.cityId === parseInt(cityFilter));
     })
     .sort((a, b) => new Date(a.eventDate).getTime() - new Date(b.eventDate).getTime());
 

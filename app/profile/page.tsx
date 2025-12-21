@@ -15,6 +15,11 @@ interface UserData {
     name: string;
     country: string;
   } | null;
+  preferredCity: {
+    cityId: number;
+    name: string;
+    country: string;
+  } | null;
 }
 
 /**
@@ -84,6 +89,8 @@ export default async function ProfilePage() {
         location: userData.location,
         eventPreference: userData.eventPreference,
         cityName: userData.city?.name || null,
+        preferredCityId: userData.preferredCity?.cityId || null,
+        preferredCityName: userData.preferredCity?.name || null,
       }}
     />
   );
