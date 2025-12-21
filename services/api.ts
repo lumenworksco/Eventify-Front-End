@@ -3,7 +3,7 @@
  * Provides typed interfaces and fetch functions for all entities
  */
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL;
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'https://eventify-back-end.onrender.com/api';
 
 // ============================
 // Type Definitions
