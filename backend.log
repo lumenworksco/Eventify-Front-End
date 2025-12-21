@@ -2995,3 +2995,35 @@ Hibernate:
         c1_0.region 
     from
         cities c1_0
+Hibernate: 
+    select
+        c1_0.city_id,
+        c1_0.country,
+        c1_0.name,
+        c1_0.region 
+    from
+        cities c1_0
+Hibernate: 
+    select
+        c1_0.city_id,
+        c1_0.country,
+        c1_0.name,
+        c1_0.region 
+    from
+        cities c1_0
+Hibernate: 
+    select
+        c1_0.city_id,
+        c1_0.country,
+        c1_0.name,
+        c1_0.region 
+    from
+        cities c1_0
+Hibernate: 
+    select
+        c1_0.city_id,
+        c1_0.country,
+        c1_0.name,
+        c1_0.region 
+    from
+        cities c1_0
