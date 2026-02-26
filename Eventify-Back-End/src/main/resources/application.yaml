@@ -5,7 +5,7 @@ spring:
   application:
     name: eventify
   datasource:
-    url: jdbc:postgresql://${PGHOST:localhost}:${PGPORT:5432}/${PGDATABASE:eventify}?sslmode=${PGSSLMODE:require}
+    url: "jdbc:postgresql://${PGHOST:localhost}:${PGPORT:5432}/${PGDATABASE:eventify}?sslmode=${PGSSLMODE:require}&gssEncMode=disable&sslNegotiation=direct"
     username: ${PGUSER:postgres}
     password: ${PGPASSWORD:postgres}
     driver-class-name: org.postgresql.Driver
