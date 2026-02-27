@@ -24,9 +24,6 @@ export default function Layout({ children }: { children: ReactNode }) {
                 <Link href="/">{t('nav.home')}</Link>
               </li>
               <li>
-                <Link href="/cities">{t('nav.cities')}</Link>
-              </li>
-              <li>
                 <Link href="/events">{t('nav.events')}</Link>
               </li>
               {/* Only show Add Event to ADMIN and ORGANIZER roles */}
