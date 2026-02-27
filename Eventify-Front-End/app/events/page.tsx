@@ -11,18 +11,17 @@ import ErrorMessage from '../../components/ErrorMessage';
 export default function EventsPage() {
   const [typeFilter, setTypeFilter] = useState('');
   const [cityFilter, setCityFilter] = useState('');
+  const [searchQuery, setSearchQuery] = useState('');
   const router = useRouter();
   const { t } = useLanguage();
 
-  // Use SWR hooks for data fetching
   const { data: events, error: eventsError, isLoading: eventsLoading, mutate: mutateEvents } = useEvents();
   const { data: cities, error: citiesError, isLoading: citiesLoading } = useCities();
-  const { data: eventTypes, error: typesError } = useEventTypes();
+  const { data: eventTypes } = useEventTypes();
 
   const isLoading = eventsLoading || citiesLoading;
   const error = eventsError || citiesError;
 
-  // Use eventTypes from API, fallback to extracting from events
   const types = eventTypes || (events ? Array.from(
     new Set(
       events
@@ -31,8 +30,17 @@ export default function EventsPage() {
     )
   ) : []);
 
-  // Filter events
   const filtered = (events || [])
+    .filter((e) => {
+      if (!searchQuery) return true;
+      const q = searchQuery.toLowerCase();
+      return (
+        e.title.toLowerCase().includes(q) ||
+        e.eventDescription?.featuredArtists?.toLowerCase().includes(q) ||
+        e.eventDescription?.eventType?.toLowerCase().includes(q) ||
+        e.venues?.some((v: Venue) => v.name.toLowerCase().includes(q))
+      );
+    })
     .filter((e) => {
       if (!typeFilter) return true;
       return e.eventDescription?.eventType === typeFilter;
@@ -43,7 +51,6 @@ export default function EventsPage() {
     })
     .sort((a, b) => new Date(a.eventDate).getTime() - new Date(b.eventDate).getTime());
 
-  // Callback for navigating to venue
   function handleViewSchedule(venueId: number) {
     router.push(`/venue/${venueId}`);
   }
@@ -61,8 +68,8 @@ export default function EventsPage() {
     return (
       <div>
         <h2>{t('events.title')}</h2>
-        <ErrorMessage 
-          message={error.message} 
+        <ErrorMessage
+          message={error.message}
           onRetry={() => mutateEvents()}
         />
       </div>
@@ -71,10 +78,37 @@ export default function EventsPage() {
 
   return (
     <div>
-      <h2>{t('events.title')}</h2>
-      <p className="muted">{t('events.subtitle')}</p>
+      <div style={{ marginBottom: 24 }}>
+        <h2 style={{ marginBottom: 4 }}>{t('events.title')}</h2>
+        <p className="muted">{t('events.subtitle')}</p>
+      </div>
 
-      <div className="card">
+      <div className="card" style={{ marginBottom: 20 }}>
+        <div style={{ marginBottom: 12 }}>
+          <div style={{ position: 'relative' }}>
+            <svg
+              width="18"
+              height="18"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="var(--muted)"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              style={{ position: 'absolute', left: 12, top: '50%', transform: 'translateY(-50%)', pointerEvents: 'none' }}
+            >
+              <circle cx="11" cy="11" r="8" />
+              <line x1="21" y1="21" x2="16.65" y2="16.65" />
+            </svg>
+            <input
+              type="text"
+              placeholder="Search events, artists, venues..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              style={{ paddingLeft: 40 }}
+            />
+          </div>
+        </div>
         <div className="controls">
           <div>
             <label className="small">{t('events.filterCity')}</label>
@@ -97,14 +131,39 @@ export default function EventsPage() {
         </div>
       </div>
 
+      <div style={{ marginBottom: 12, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <p className="small muted">
+          {filtered.length} {filtered.length === 1 ? 'event' : 'events'} found
+          {(searchQuery || typeFilter || cityFilter) && (
+            <button
+              onClick={() => { setSearchQuery(''); setTypeFilter(''); setCityFilter(''); }}
+              style={{
+                background: 'none',
+                border: 'none',
+                color: 'var(--accent)',
+                cursor: 'pointer',
+                fontSize: 13,
+                fontWeight: 600,
+                marginLeft: 8,
+              }}
+            >
+              Clear filters
+            </button>
+          )}
+        </p>
+      </div>
+
       {filtered.length === 0 ? (
-        <div className="card">{t('events.noEvents')}</div>
+        <div className="empty-state">
+          <p>No events match your search</p>
+          <p className="small muted" style={{ marginTop: 8 }}>Try adjusting your filters or search terms</p>
+        </div>
       ) : (
-        <div className="grid" style={{ marginTop: 12 }}>
+        <div className="events-list">
           {filtered.map((event) => (
-            <EventCard 
-              key={event.eventId} 
-              event={event} 
+            <EventCard
+              key={event.eventId}
+              event={event}
               onViewSchedule={handleViewSchedule}
             />
           ))}

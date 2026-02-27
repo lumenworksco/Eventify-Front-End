@@ -10,19 +10,17 @@ export default function LoginPage() {
   const [password, setPassword] = useState('');
   const [error, setError] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  
+
   const { login, isAuthenticated } = useAuth();
   const { t } = useLanguage();
   const router = useRouter();
 
-  // Redirect if already logged in
   useEffect(() => {
     if (isAuthenticated) {
       router.push('/');
     }
   }, [isAuthenticated, router]);
 
-  // Don't render the form if already authenticated
   if (isAuthenticated) {
     return null;
   }
@@ -30,8 +28,7 @@ export default function LoginPage() {
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();
     setError(null);
-    
-    // Client-side validation
+
     if (!name.trim()) {
       setError(t('validation.usernameRequired'));
       return;
@@ -42,10 +39,10 @@ export default function LoginPage() {
     }
 
     setIsSubmitting(true);
-    
+
     try {
       const result = await login(name.trim(), password);
-      
+
       if (result.success) {
         router.push('/');
       } else {
@@ -59,106 +56,76 @@ export default function LoginPage() {
   }
 
   return (
-    <div style={{ 
-      display: 'flex', 
-      flexDirection: 'column', 
-      alignItems: 'center', 
-      justifyContent: 'center',
-      minHeight: '60vh',
-      padding: '2rem 1rem'
-    }}>
-      <div style={{ width: '100%', maxWidth: 400, textAlign: 'center' }}>
-        <h2>{t('login.title')}</h2>
-        <p className="muted">{t('login.subtitle')}</p>
-      </div>
-
-      <form onSubmit={handleSubmit} className="card" style={{ width: '100%', maxWidth: 400 }}>
-        {error && (
-          <div style={{ 
-            color: '#ef4444', 
-            backgroundColor: '#fef2f2', 
-            padding: '0.75rem', 
-            borderRadius: '6px',
-            marginBottom: '1rem',
-            fontSize: '0.875rem'
-          }}>
-            {error}
+    <div className="auth-page">
+      <div className="auth-container">
+        <div className="auth-header">
+          <div className="auth-icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4" />
+              <polyline points="10 17 15 12 10 7" />
+              <line x1="15" y1="12" x2="3" y2="12" />
+            </svg>
           </div>
-        )}
+          <h2>{t('login.title')}</h2>
+          <p className="muted">{t('login.subtitle')}</p>
+        </div>
 
-        <div style={{ marginBottom: '1rem' }}>
-          <label className="small" htmlFor="username">{t('login.username')} *</label>
-          <input
-            id="username"
-            type="text"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            placeholder={t('login.username')}
+        <form onSubmit={handleSubmit} className="auth-form">
+          {error && (
+            <div className="form-error">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <circle cx="12" cy="12" r="10" />
+                <line x1="15" y1="9" x2="9" y2="15" />
+                <line x1="9" y1="9" x2="15" y2="15" />
+              </svg>
+              {error}
+            </div>
+          )}
+
+          <div className="form-group">
+            <label htmlFor="username">{t('login.username')}</label>
+            <input
+              id="username"
+              type="text"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              placeholder={t('login.username')}
+              disabled={isSubmitting}
+              autoComplete="username"
+              required
+            />
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="password">{t('login.password')}</label>
+            <input
+              id="password"
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder={t('login.password')}
+              disabled={isSubmitting}
+              autoComplete="current-password"
+              required
+            />
+          </div>
+
+          <button
+            type="submit"
+            className="btn btn-primary btn-full"
             disabled={isSubmitting}
-            autoComplete="username"
-            required
-          />
-        </div>
+          >
+            {isSubmitting ? t('login.submitting') : t('login.submit')}
+          </button>
 
-        <div style={{ marginBottom: '1rem' }}>
-          <label className="small" htmlFor="password">{t('login.password')} *</label>
-          <input
-            id="password"
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            placeholder={t('login.password')}
-            disabled={isSubmitting}
-            autoComplete="current-password"
-            required
-          />
-        </div>
-
-        <button 
-          type="submit" 
-          className="btn btn-primary"
-          disabled={isSubmitting}
-          style={{ width: '100%' }}
-        >
-          {isSubmitting ? t('login.submitting') : t('login.submit')}
-        </button>
-
-        <div style={{ marginTop: '1.5rem' }}>
-          <p className="small muted" style={{ marginBottom: '0.5rem', textAlign: 'center' }}>{t('login.demoAccounts')}:</p>
-          <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '0.85rem' }}>
-            <thead>
-              <tr style={{ borderBottom: '2px solid #e6edf3' }}>
-                <th style={{ padding: '0.5rem', textAlign: 'left' }}>{t('login.username')}</th>
-                <th style={{ padding: '0.5rem', textAlign: 'left' }}>{t('login.password')}</th>
-                <th style={{ padding: '0.5rem', textAlign: 'left' }}>{t('login.role')}</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr style={{ borderBottom: '1px solid #e6edf3' }}>
-                <td style={{ padding: '0.5rem' }}>john</td>
-                <td style={{ padding: '0.5rem' }}>john123</td>
-                <td style={{ padding: '0.5rem' }}>{t('login.roleUser')}</td>
-              </tr>
-              <tr style={{ borderBottom: '1px solid #e6edf3' }}>
-                <td style={{ padding: '0.5rem' }}>jane</td>
-                <td style={{ padding: '0.5rem' }}>jane123</td>
-                <td style={{ padding: '0.5rem' }}>{t('login.roleOrganizer')}</td>
-              </tr>
-              <tr>
-                <td style={{ padding: '0.5rem' }}>admin</td>
-                <td style={{ padding: '0.5rem' }}>admin123</td>
-                <td style={{ padding: '0.5rem' }}>{t('login.roleAdmin')}</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-
-        <div style={{ marginTop: '1.5rem', paddingTop: '1rem', borderTop: '1px solid #e6edf3', textAlign: 'center' }}>
-          <p className="small muted">
-            {t('login.noAccount')} <Link href="/register" style={{ color: 'var(--accent)', fontWeight: 600 }}>{t('login.registerLink')}</Link>
-          </p>
-        </div>
-      </form>
+          <div className="auth-footer">
+            <p>
+              {t('login.noAccount')}{' '}
+              <Link href="/register">{t('login.registerLink')}</Link>
+            </p>
+          </div>
+        </form>
+      </div>
     </div>
   );
 }
