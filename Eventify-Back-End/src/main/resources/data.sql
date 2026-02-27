@@ -33,16 +33,16 @@ INSERT INTO events (title, event_date, start_time, end_time, available_tickets) 
     ('Dua Lipa – Radical Optimism Tour','2026-04-02','19:30','22:30',12000),
     ('Jazz Middelheim Preview Night', '2026-04-18', '18:00', '23:00', 1800),
     ('Rammstein European Tour',       '2026-05-10', '19:00', '22:30',22000),
-    ('Tomorrowland Winter Warm-Up',   '2026-05-24', '14:00', '02:00', 7500),
+    ('Tomorrowland Winter Warm-Up',   '2026-05-24', '14:00', '23:59', 7500),
     ('Arctic Monkeys',                '2026-06-06', '20:00', '23:00', 7800),
-    ('Rock Werchter Opening Night',   '2026-07-02', '16:00', '01:00',12000),
+    ('Rock Werchter Opening Night',   '2026-07-02', '16:00', '23:59',12000),
     ('Editors – EBM Night',           '2026-07-19', '20:30', '23:30', 1600),
     ('Balthazar Farewell Show',       '2026-08-08', '20:00', '23:00', 1900),
     ('Coldplay – Music of the Spheres','2026-08-22','19:00','23:00',23000),
     ('Massive Attack',                '2026-09-05', '21:00', '23:30', 2000),
     ('Ghent Jazz Festival Closing',   '2026-09-13', '15:00', '23:00', 3000),
     ('Amenra – Church of Ra',         '2026-10-03', '20:00', '23:00',  480),
-    ('Brussels Electronic Marathon',  '2026-10-17', '22:00', '06:00', 1200),
+    ('Brussels Electronic Marathon',  '2026-10-17', '22:00', '23:59', 1200),
     ('Liège Philharmonic Gala',       '2026-11-28', '19:30', '22:00', 1500)
 ON CONFLICT DO NOTHING;
 
