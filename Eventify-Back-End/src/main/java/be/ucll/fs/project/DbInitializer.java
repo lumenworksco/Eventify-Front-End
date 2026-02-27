@@ -4,6 +4,8 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Arrays;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
@@ -22,6 +24,8 @@ import be.ucll.fs.project.unit.model.Venue;
 
 @Component
 public class DbInitializer implements CommandLineRunner {
+
+    private static final Logger log = LoggerFactory.getLogger(DbInitializer.class);
 
     private final CityRepository cityRepository;
     private final UserRepository userRepository;
@@ -653,10 +657,8 @@ public class DbInitializer implements CommandLineRunner {
                 rf1, rf2, or1, or2, lm1
         ));
 
-        System.out.println("✅ Database initialized with test data!");
-        System.out.println("📊 Created: " + cityRepository.count() + " cities, " + 
-                          userRepository.count() + " users, " + 
-                          venueRepository.count() + " venues, " + 
-                          eventRepository.count() + " events");
+        log.info("Database initialized with seed data: {} cities, {} users, {} venues, {} events",
+                cityRepository.count(), userRepository.count(),
+                venueRepository.count(), eventRepository.count());
     }
 }

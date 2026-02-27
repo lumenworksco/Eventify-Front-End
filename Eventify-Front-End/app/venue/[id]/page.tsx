@@ -18,9 +18,9 @@ export default function VenuePage() {
     return (
       <div className="card">
         {t('venue.idMissing')}
-        <a href="/cities" className="btn btn-ghost" style={{ marginLeft: 8 }}>
-          {t('venue.browseCities')}
-        </a>
+        <a href="/events" className="btn btn-ghost" style={{ marginLeft: 8 }}>
+            {t('nav.events')}
+          </a>
       </div>
     );
   }
@@ -108,7 +108,6 @@ export default function VenuePage() {
 
       <div style={{ marginTop: 12 }}>
         <a href="/events" className="btn btn-ghost">{t('venue.backToEvents')}</a>
-        <a href="/cities" className="btn btn-ghost" style={{ marginLeft: 8 }}>{t('venue.backToCities')}</a>
       </div>
     </div>
   );

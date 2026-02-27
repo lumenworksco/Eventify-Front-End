@@ -28,8 +28,8 @@ function VenueRedirect() {
         <h2>{t('venue.notFound')}</h2>
         <div className="card">
           {t('venue.idMissing')}
-          <a href="/cities" className="btn btn-ghost" style={{ marginLeft: 8 }}>
-            {t('venue.browseCities')}
+          <a href="/events" className="btn btn-ghost" style={{ marginLeft: 8 }}>
+            {t('nav.events')}
           </a>
         </div>
       </div>
