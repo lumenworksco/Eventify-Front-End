@@ -14,8 +14,7 @@ spring:
         format_sql: true
   sql:
     init:
-      mode: always
-      platform: h2
+      mode: never
   security:
     oauth2:
       resourceserver:

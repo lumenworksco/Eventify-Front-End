@@ -46,7 +46,7 @@ class TicketServiceTest {
         // Arrange
         City city = new City("Brussels", "Brussels-Capital", "Belgium");
         Venue venue = new Venue("Concert Hall", "Main Street 1", 5000, city);
-        Event event = new Event("Rock Concert", LocalDate.of(2025, 12, 25), 
+        Event event = new Event("Rock Concert", LocalDate.now().plusYears(1), 
                                LocalTime.of(20, 0), LocalTime.of(23, 0));
         User user1 = new User("Alice", "hashedpass", Role.USER, "Brussels", "Music", city);
         User user2 = new User("Bob", "hashedpass", Role.USER, "Brussels", "Music", city);
@@ -68,7 +68,7 @@ class TicketServiceTest {
     void testGetTicketById_ReturnsTicketWhenFound() {
         // Arrange
         City city = new City("Brussels", "Brussels-Capital", "Belgium");
-        Event event = new Event("Concert", LocalDate.of(2025, 12, 25), 
+        Event event = new Event("Concert", LocalDate.now().plusYears(1), 
                                LocalTime.of(20, 0), LocalTime.of(23, 0));
         User user = new User("Alice", "hashedpass", Role.USER, "Brussels", "Music", city);
         
@@ -91,7 +91,7 @@ class TicketServiceTest {
         // Arrange
         Long userId = 1L;
         City city = new City("Brussels", "Brussels-Capital", "Belgium");
-        Event event = new Event("Concert", LocalDate.of(2025, 12, 25), 
+        Event event = new Event("Concert", LocalDate.now().plusYears(1), 
                                LocalTime.of(20, 0), LocalTime.of(23, 0));
         User user = new User("Alice", "hashedpass", Role.USER, "Brussels", "Music", city);
         user.setUserId(userId);
@@ -116,7 +116,7 @@ class TicketServiceTest {
         // Arrange
         Long eventId = 1L;
         City city = new City("Brussels", "Brussels-Capital", "Belgium");
-        Event event = new Event("Concert", LocalDate.of(2025, 12, 25), 
+        Event event = new Event("Concert", LocalDate.now().plusYears(1), 
                                LocalTime.of(20, 0), LocalTime.of(23, 0));
         event.setEventId(eventId);
         User user1 = new User("Alice", "hashedpass", Role.USER, "Brussels", "Music", city);
@@ -141,7 +141,7 @@ class TicketServiceTest {
     void testGetAvailableTicketsForEvent_ReturnsAvailableCount() {
         // Arrange
         Long eventId = 1L;
-        Event event = new Event("Concert", LocalDate.of(2025, 12, 25), 
+        Event event = new Event("Concert", LocalDate.now().plusYears(1), 
                                LocalTime.of(20, 0), LocalTime.of(23, 0));
         event.setEventId(eventId);
         event.setAvailableTickets(100);
@@ -169,7 +169,7 @@ class TicketServiceTest {
         User user = new User("Alice", "hashedpass", Role.USER, "Brussels", "Music", city);
         user.setUserId(userId);
         
-        Event event = new Event("Concert", LocalDate.of(2025, 12, 25), 
+        Event event = new Event("Concert", LocalDate.now().plusYears(1), 
                                LocalTime.of(20, 0), LocalTime.of(23, 0));
         event.setEventId(eventId);
         event.setAvailableTickets(100);
@@ -207,7 +207,7 @@ class TicketServiceTest {
         User user = new User("Alice", "hashedpass", Role.USER, "Brussels", "Music", city);
         user.setUserId(userId);
         
-        Event event = new Event("Concert", LocalDate.of(2025, 12, 25), 
+        Event event = new Event("Concert", LocalDate.now().plusYears(1), 
                                LocalTime.of(20, 0), LocalTime.of(23, 0));
         event.setEventId(eventId);
         event.setAvailableTickets(100);
@@ -240,7 +240,7 @@ class TicketServiceTest {
         User user = new User("Alice", "hashedpass", Role.USER, "Brussels", "Music", city);
         user.setUserId(userId);
         
-        Event event = new Event("Concert", LocalDate.of(2025, 12, 25), 
+        Event event = new Event("Concert", LocalDate.now().plusYears(1), 
                                LocalTime.of(20, 0), LocalTime.of(23, 0));
         event.setEventId(eventId);
         
