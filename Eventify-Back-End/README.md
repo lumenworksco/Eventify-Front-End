@@ -1,11 +1,14 @@
 # Eventify Backend
 
+[![Deployed on Render](https://img.shields.io/badge/Deployed%20on-Render-46E3B7?logo=render&logoColor=white)](https://eventify-back-end.onrender.com)
+[![Database on Supabase](https://img.shields.io/badge/Database-Supabase-3FCF8E?logo=supabase&logoColor=white)](https://supabase.com)
+
 Spring Boot REST API for the Eventify event management platform.
 
 ## Tech
 
 - Java 21, Spring Boot 3, Hibernate/JPA
-- PostgreSQL, JWT authentication, SpringDoc OpenAPI
+- PostgreSQL (Supabase), JWT authentication, SpringDoc OpenAPI
 
 ## Running Locally
 
@@ -30,6 +33,20 @@ Swagger UI: `http://localhost:8080/swagger-ui.html`
 | Cities              | `GET/POST/PUT/DELETE /api/cities`  |
 | Tickets             | `POST /api/tickets/purchase`, `DELETE /api/tickets/{id}` |
 | Event Descriptions  | `GET/POST/PUT/DELETE /api/event-descriptions` |
+
+## Deployment
+
+Deployed on [Render](https://render.com) as a Web Service with auto-deploy from `main`.
+
+| Setting        | Value                                |
+|----------------|--------------------------------------|
+| Root Directory | `Eventify-Back-End`                  |
+| Build Command  | `./mvnw clean package -DskipTests`   |
+| Start Command  | `java -jar target/*.jar`             |
+
+The database is hosted on [Supabase](https://supabase.com) using the **Session Pooler** endpoint for IPv4 compatibility.
+
+See `.env.example` for required environment variables.
 
 ## Docker
 

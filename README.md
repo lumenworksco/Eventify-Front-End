@@ -1,25 +1,88 @@
 # Eventify
 
-A full-stack event management platform for browsing venues, discovering events, and purchasing tickets. Built with **Spring Boot** (Java 21) and **Next.js** (React 19, TypeScript).
+[![Deployed on Render](https://img.shields.io/badge/Deployed%20on-Render-46E3B7?logo=render&logoColor=white)](https://eventify-xrz7.onrender.com)
+[![Database on Supabase](https://img.shields.io/badge/Database-Supabase-3FCF8E?logo=supabase&logoColor=white)](https://supabase.com)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+
+[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/lumenworksco/Eventify)
+
+A full-stack event management platform for discovering events, browsing venues, and purchasing tickets across Belgium. Built with **Spring Boot** (Java 21) and **Next.js** (React 19, TypeScript).
+
+> **Live Demo:** [eventify-xrz7.onrender.com](https://eventify-xrz7.onrender.com)
+>
+> *Note: The app is hosted on Render's free tier, so the first request may take ~30 seconds while the services spin up.*
 
 ## Features
 
-- Browse events and venues across multiple cities
-- Filter events by city, type, and date
+- Browse and search events with real-time filtering
+- Detailed event pages with venue info, artists, and ticket links
 - User authentication with JWT (role-based: User, Organizer, Admin)
 - Ticket purchasing with availability tracking
 - Multi-language support (English, French, German)
 - Personalized home feed based on preferred city
 - Swagger/OpenAPI documentation for the REST API
+- Responsive design for mobile and desktop
 
 ## Tech Stack
 
-| Layer    | Technology                                  |
-|----------|---------------------------------------------|
-| Frontend | Next.js 15, React 19, TypeScript, SWR       |
-| Backend  | Spring Boot 3, Java 21, Hibernate, JWT       |
-| Database | PostgreSQL 16                                |
-| Docs     | SpringDoc OpenAPI / Swagger UI               |
+| Layer      | Technology                                     |
+|------------|------------------------------------------------|
+| Frontend   | Next.js 15, React 19, TypeScript, SWR          |
+| Backend    | Spring Boot 3, Java 21, Hibernate, JWT          |
+| Database   | PostgreSQL 16 (hosted on Supabase)              |
+| Deployment | Render (frontend + backend)                     |
+| Docs       | SpringDoc OpenAPI / Swagger UI                  |
+
+## Deployment Architecture
+
+```
+                     ┌─────────────────┐
+                     │   GitHub Repo   │
+                     │   (monorepo)    │
+                     └────────┬────────┘
+                              │ auto-deploy
+               ┌──────────────┴──────────────┐
+               ▼                             ▼
+      ┌─────────────────┐          ┌─────────────────┐
+      │  Render          │          │  Render          │
+      │  Static Site     │          │  Web Service     │
+      │  (Next.js)       │─────────▶│  (Spring Boot)   │
+      │  Port 3000       │  API     │  Port 8080       │
+      └─────────────────┘          └────────┬─────────┘
+                                            │
+                                            ▼
+                                   ┌─────────────────┐
+                                   │   Supabase       │
+                                   │   PostgreSQL     │
+                                   │  (Session Pooler)│
+                                   └─────────────────┘
+```
+
+### Render
+
+Both the frontend and backend are deployed on [Render](https://render.com) with auto-deploy from the `main` branch.
+
+| Service   | Type          | Root Directory         | Build Command                  | Start Command                          |
+|-----------|---------------|------------------------|--------------------------------|----------------------------------------|
+| Frontend  | Web Service   | `Eventify-Front-End`   | `npm install && npm run build` | `npm start`                            |
+| Backend   | Web Service   | `Eventify-Back-End`    | `./mvnw clean package -DskipTests` | `java -jar target/*.jar`          |
+
+### Supabase
+
+The PostgreSQL database is hosted on [Supabase](https://supabase.com) (free tier, no 30-day expiry). The backend connects via the **Session Pooler** endpoint for IPv4 compatibility with Render.
+
+**Required backend environment variables on Render:**
+
+| Variable     | Value                                        |
+|--------------|----------------------------------------------|
+| `PGHOST`     | `aws-0-[region].pooler.supabase.com`         |
+| `PGPORT`     | `5432`                                       |
+| `PGDATABASE` | `postgres`                                   |
+| `PGUSER`     | `postgres.[project-ref]`                     |
+| `PGPASSWORD` | Your Supabase database password              |
+| `JWT_SECRET` | A strong random string (256+ bits)           |
+
+> **Important:** Use the Supabase **Session Pooler** connection (not the direct connection) because Render's free tier only supports IPv4, while Supabase's direct connection is IPv6 only.
 
 ## Project Structure
 
