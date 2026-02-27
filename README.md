@@ -4,8 +4,6 @@
 [![Database on Supabase](https://img.shields.io/badge/Database-Supabase-3FCF8E?logo=supabase&logoColor=white)](https://supabase.com)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
-[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/lumenworksco/Eventify)
-
 A full-stack event management platform for discovering events, browsing venues, and purchasing tickets across Belgium. Built with **Spring Boot** (Java 21) and **Next.js** (React 19, TypeScript).
 
 > **Live Demo:** [eventify-xrz7.onrender.com](https://eventify-xrz7.onrender.com)
