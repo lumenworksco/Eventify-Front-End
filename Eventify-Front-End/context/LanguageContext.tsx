@@ -175,18 +175,43 @@ const translations: Record<Locale, Translations> = {
     'register.error': 'Registration failed. Please try again.',
     'register.haveAccount': 'Already have an account?',
     'register.loginLink': 'Login here',
-    
+    'register.accountType': 'Account Type',
+    'register.roleUser': 'User',
+    'register.roleOrganizer': 'Organizer',
+    'register.userDesc': 'Browse events and purchase tickets',
+    'register.organizerDesc': 'Create and manage your own events',
+
     // Validation
     'validation.usernameMinLength': 'Username must be at least 3 characters',
     'validation.passwordMinLength': 'Password must be at least 6 characters',
     'validation.passwordMismatch': 'Passwords do not match',
-    
+
     // Common
     'common.loading': 'Loading...',
     'common.error': 'Error',
     'common.backendError': 'Unable to connect to the backend server. Please try again later.',
     'common.required': 'required',
     'common.retry': 'Retry',
+    'common.viewDetails': 'View Details',
+    'common.backToEvents': 'Back to Events',
+    'common.browseEvents': 'Browse Events',
+    'common.viewAllEvents': 'View all events',
+
+    // Event detail page
+    'eventDetail.notFound': 'Event not found',
+    'eventDetail.pastEvent': 'Past Event',
+    'eventDetail.time': 'Time',
+    'eventDetail.venue': 'Venue',
+    'eventDetail.featuredArtists': 'Featured Artists',
+    'eventDetail.tickets': 'Tickets',
+    'eventDetail.available': '{count} available',
+    'eventDetail.getTickets': 'Get Tickets',
+    'eventDetail.about': 'About this event',
+    'eventDetail.allVenues': 'All Venues',
+
+    // Home page extra
+    'home.upcomingEvents': 'Upcoming Events',
+    'home.upcomingSubtitle': 'Don\'t miss what\'s happening next',
     
     // Profile page
     'profile.title': 'My Profile',
@@ -386,18 +411,43 @@ const translations: Record<Locale, Translations> = {
     'register.error': 'L\'inscription a échoué. Veuillez réessayer.',
     'register.haveAccount': 'Vous avez déjà un compte ?',
     'register.loginLink': 'Connectez-vous ici',
-    
+    'register.accountType': 'Type de compte',
+    'register.roleUser': 'Utilisateur',
+    'register.roleOrganizer': 'Organisateur',
+    'register.userDesc': 'Parcourir les événements et acheter des billets',
+    'register.organizerDesc': 'Créer et gérer vos propres événements',
+
     // Validation
     'validation.usernameMinLength': 'Le nom d\'utilisateur doit comporter au moins 3 caractères',
     'validation.passwordMinLength': 'Le mot de passe doit comporter au moins 6 caractères',
     'validation.passwordMismatch': 'Les mots de passe ne correspondent pas',
-    
+
     // Common
     'common.loading': 'Chargement...',
     'common.error': 'Erreur',
     'common.backendError': 'Impossible de se connecter au serveur backend. Veuillez réessayer plus tard.',
     'common.required': 'obligatoire',
     'common.retry': 'Réessayer',
+    'common.viewDetails': 'Voir les détails',
+    'common.backToEvents': 'Retour aux événements',
+    'common.browseEvents': 'Parcourir les événements',
+    'common.viewAllEvents': 'Voir tous les événements',
+
+    // Event detail page
+    'eventDetail.notFound': 'Événement non trouvé',
+    'eventDetail.pastEvent': 'Événement passé',
+    'eventDetail.time': 'Horaire',
+    'eventDetail.venue': 'Lieu',
+    'eventDetail.featuredArtists': 'Artistes à l\'affiche',
+    'eventDetail.tickets': 'Billets',
+    'eventDetail.available': '{count} disponibles',
+    'eventDetail.getTickets': 'Acheter des billets',
+    'eventDetail.about': 'À propos de cet événement',
+    'eventDetail.allVenues': 'Tous les lieux',
+
+    // Home page extra
+    'home.upcomingEvents': 'Événements à venir',
+    'home.upcomingSubtitle': 'Ne manquez pas ce qui arrive',
     
     // Profile page
     'profile.title': 'Mon profil',
@@ -597,17 +647,43 @@ const translations: Record<Locale, Translations> = {
     'register.error': 'Registrierung fehlgeschlagen. Bitte versuchen Sie es erneut.',
     'register.haveAccount': 'Haben Sie bereits ein Konto?',
     'register.loginLink': 'Hier anmelden',
-    
+    'register.accountType': 'Kontotyp',
+    'register.roleUser': 'Benutzer',
+    'register.roleOrganizer': 'Organisator',
+    'register.userDesc': 'Veranstaltungen durchsuchen und Tickets kaufen',
+    'register.organizerDesc': 'Eigene Veranstaltungen erstellen und verwalten',
+
     // Validation
     'validation.usernameMinLength': 'Benutzername muss mindestens 3 Zeichen lang sein',
     'validation.passwordMinLength': 'Passwort muss mindestens 6 Zeichen lang sein',
-    'validation.passwordMismatch': 'Passwörter stimmen nicht überein',    
+    'validation.passwordMismatch': 'Passwörter stimmen nicht überein',
+
     // Common
     'common.loading': 'Laden...',
     'common.error': 'Fehler',
     'common.backendError': 'Verbindung zum Backend-Server nicht möglich. Bitte versuchen Sie es später erneut.',
     'common.required': 'erforderlich',
     'common.retry': 'Erneut versuchen',
+    'common.viewDetails': 'Details ansehen',
+    'common.backToEvents': 'Zurück zu Veranstaltungen',
+    'common.browseEvents': 'Veranstaltungen durchsuchen',
+    'common.viewAllEvents': 'Alle Veranstaltungen',
+
+    // Event detail page
+    'eventDetail.notFound': 'Veranstaltung nicht gefunden',
+    'eventDetail.pastEvent': 'Vergangene Veranstaltung',
+    'eventDetail.time': 'Uhrzeit',
+    'eventDetail.venue': 'Veranstaltungsort',
+    'eventDetail.featuredArtists': 'Auftretende Künstler',
+    'eventDetail.tickets': 'Tickets',
+    'eventDetail.available': '{count} verfügbar',
+    'eventDetail.getTickets': 'Tickets kaufen',
+    'eventDetail.about': 'Über diese Veranstaltung',
+    'eventDetail.allVenues': 'Alle Veranstaltungsorte',
+
+    // Home page extra
+    'home.upcomingEvents': 'Kommende Veranstaltungen',
+    'home.upcomingSubtitle': 'Verpassen Sie nicht, was als Nächstes kommt',
     
     // Profile page
     'profile.title': 'Mein Profil',

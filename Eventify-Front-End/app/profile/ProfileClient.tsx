@@ -46,9 +46,9 @@ export default function ProfileClient({ user, error }: ProfileClientProps) {
     try {
       await api.setPreferredCity(user.userId, selectedCityId);
       setAuthPreferredCity(selectedCityId);
-      setSaveMessage(t('profile.preferencesSaved') || 'Preferences saved!');
+      setSaveMessage(t('profile.preferencesSaved'));
     } catch (err) {
-      setSaveMessage(t('profile.saveFailed') || 'Failed to save preferences');
+      setSaveMessage(t('profile.saveFailed'));
     } finally {
       setSaving(false);
     }
@@ -151,7 +151,7 @@ export default function ProfileClient({ user, error }: ProfileClientProps) {
 
           <div style={{ marginBottom: '1.5rem', borderTop: '1px solid #e6edf3', paddingTop: '1rem' }}>
             <label className="small muted" style={{ display: 'block', marginBottom: '0.5rem' }}>
-              {t('profile.preferredCity') || 'Preferred City for Home Page'}
+              {t('profile.preferredCity')}
             </label>
             <select
               value={selectedCityId || ''}
@@ -165,7 +165,7 @@ export default function ProfileClient({ user, error }: ProfileClientProps) {
                 marginBottom: '0.5rem'
               }}
             >
-              <option value="">{t('profile.noPreference') || 'No preference (show all)'}</option>
+              <option value="">{t('profile.noPreference')}</option>
               {cities.map(city => (
                 <option key={city.cityId} value={city.cityId}>
                   {city.name}, {city.country}
@@ -178,7 +178,7 @@ export default function ProfileClient({ user, error }: ProfileClientProps) {
               className="btn btn-primary"
               style={{ width: '100%' }}
             >
-              {saving ? (t('profile.saving') || 'Saving...') : (t('profile.savePreference') || 'Save Preference')}
+              {saving ? t('profile.saving') : t('profile.savePreference')}
             </button>
             {saveMessage && (
               <p style={{ 

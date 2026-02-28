@@ -115,279 +115,281 @@ public class DbInitializer implements CommandLineRunner {
 
         // ==========================================
         // Create Events - Brussels venues
+        // All dates are relative to today to ensure they're always in the future
         // ==========================================
-        
+        LocalDate today = LocalDate.now();
+
         // AB Concert Hall events
-        Event ab1 = new Event("Rock Festival 2025", LocalDate.of(2025, 12, 28), 
+        Event ab1 = new Event("Rock Festival", today.plusDays(14),
                              LocalTime.of(18, 0), LocalTime.of(23, 0));
         ab1.setAvailableTickets(500);
         ab1.addVenue(abConcertHall);
         eventRepository.save(ab1);
         
-        Event ab2 = new Event("Belgian DJ Night", LocalDate.of(2026, 1, 18), 
+        Event ab2 = new Event("Belgian DJ Night", today.plusDays(30),
                              LocalTime.of(22, 0), LocalTime.of(23, 59));
         ab2.setAvailableTickets(800);
         ab2.addVenue(abConcertHall);
         eventRepository.save(ab2);
         
-        Event ab3 = new Event("Indie Showcase", LocalDate.of(2026, 2, 7), 
+        Event ab3 = new Event("Indie Showcase", today.plusDays(45),
                              LocalTime.of(20, 0), LocalTime.of(23, 30));
         ab3.setAvailableTickets(600);
         ab3.addVenue(abConcertHall);
         eventRepository.save(ab3);
         
         // Forest National events
-        Event fn1 = new Event("Pop Giants Tour", LocalDate.of(2026, 1, 25), 
+        Event fn1 = new Event("Pop Giants Tour", today.plusDays(21),
                              LocalTime.of(19, 30), LocalTime.of(23, 0));
         fn1.setAvailableTickets(5000);
         fn1.addVenue(forestNational);
         eventRepository.save(fn1);
-        
-        Event fn2 = new Event("Comedy Gala 2026", LocalDate.of(2026, 2, 14), 
+
+        Event fn2 = new Event("Comedy Gala", today.plusDays(55),
                              LocalTime.of(20, 0), LocalTime.of(23, 0));
         fn2.setAvailableTickets(4000);
         fn2.addVenue(forestNational);
         eventRepository.save(fn2);
-        
+
         // Brussels Expo events
-        Event be1 = new Event("Electronic Music Festival", LocalDate.of(2026, 1, 15), 
+        Event be1 = new Event("Electronic Music Festival", today.plusDays(60),
                              LocalTime.of(19, 0), LocalTime.of(23, 30));
         be1.setAvailableTickets(10000);
         be1.addVenue(brusselsExpo);
         eventRepository.save(be1);
-        
-        Event be2 = new Event("Spring Music Festival", LocalDate.of(2026, 3, 15), 
+
+        Event be2 = new Event("Spring Music Festival", today.plusDays(90),
                              LocalTime.of(14, 0), LocalTime.of(23, 0));
         be2.setAvailableTickets(8000);
         be2.addVenue(brusselsExpo);
         eventRepository.save(be2);
-        
+
         // AB Club events
-        Event abc1 = new Event("Intimate Jazz Session", LocalDate.of(2026, 1, 11), 
+        Event abc1 = new Event("Intimate Jazz Session", today.plusDays(10),
                               LocalTime.of(20, 30), LocalTime.of(23, 0));
         abc1.setAvailableTickets(80);
         abc1.addVenue(abClub);
         eventRepository.save(abc1);
-        
-        Event abc2 = new Event("Experimental Night", LocalDate.of(2026, 2, 1), 
+
+        Event abc2 = new Event("Experimental Night", today.plusDays(35),
                               LocalTime.of(21, 0), LocalTime.of(23, 30));
         abc2.setAvailableTickets(100);
         abc2.addVenue(abClub);
         eventRepository.save(abc2);
-        
+
         // BOZAR events
-        Event bz1 = new Event("Classical Masterpieces", LocalDate.of(2026, 1, 20), 
+        Event bz1 = new Event("Classical Masterpieces", today.plusDays(25),
                              LocalTime.of(19, 0), LocalTime.of(21, 30));
         bz1.setAvailableTickets(1500);
         bz1.addVenue(bozar);
         eventRepository.save(bz1);
-        
-        Event bz2 = new Event("Piano Recital: Chopin Evening", LocalDate.of(2026, 2, 22), 
+
+        Event bz2 = new Event("Piano Recital: Chopin Evening", today.plusDays(70),
                              LocalTime.of(19, 30), LocalTime.of(21, 0));
         bz2.setAvailableTickets(1200);
         bz2.addVenue(bozar);
         eventRepository.save(bz2);
-        
+
         // ==========================================
         // Create Events - Antwerp venues
         // ==========================================
-        
+
         // Sportpaleis events
-        Event sp1 = new Event("New Year Concert", LocalDate.of(2025, 12, 31), 
+        Event sp1 = new Event("Grand Concert", today.plusDays(7),
                              LocalTime.of(21, 0), LocalTime.of(23, 59));
         sp1.setAvailableTickets(15000);
         sp1.addVenue(sportpaleis);
         eventRepository.save(sp1);
-        
-        Event sp2 = new Event("Metal Mayhem", LocalDate.of(2026, 2, 20), 
+
+        Event sp2 = new Event("Metal Mayhem", today.plusDays(50),
                              LocalTime.of(18, 0), LocalTime.of(23, 30));
         sp2.setAvailableTickets(12000);
         sp2.addVenue(sportpaleis);
         eventRepository.save(sp2);
-        
-        Event sp3 = new Event("K-Pop World Tour", LocalDate.of(2026, 3, 8), 
+
+        Event sp3 = new Event("K-Pop World Tour", today.plusDays(80),
                              LocalTime.of(19, 0), LocalTime.of(22, 0));
         sp3.setAvailableTickets(18000);
         sp3.addVenue(sportpaleis);
         eventRepository.save(sp3);
-        
+
         // TRIX events
-        Event tr1 = new Event("Indie Rock Night", LocalDate.of(2026, 1, 22), 
+        Event tr1 = new Event("Indie Rock Night", today.plusDays(18),
                              LocalTime.of(20, 0), LocalTime.of(23, 0));
         tr1.setAvailableTickets(400);
         tr1.addVenue(trix);
         eventRepository.save(tr1);
-        
-        Event tr2 = new Event("Punk Revival", LocalDate.of(2026, 2, 8), 
+
+        Event tr2 = new Event("Punk Revival", today.plusDays(42),
                              LocalTime.of(20, 30), LocalTime.of(23, 30));
         tr2.setAvailableTickets(350);
         tr2.addVenue(trix);
         eventRepository.save(tr2);
-        
+
         // Stadsschouwburg Antwerp events
-        Event sa1 = new Event("Theater: Hamlet", LocalDate.of(2026, 2, 14), 
+        Event sa1 = new Event("Theater: Hamlet", today.plusDays(56),
                              LocalTime.of(19, 0), LocalTime.of(22, 0));
         sa1.setAvailableTickets(350);
         sa1.addVenue(stadsschouwburg);
         eventRepository.save(sa1);
-        
-        Event sa2 = new Event("Ballet: Swan Lake", LocalDate.of(2026, 3, 5), 
+
+        Event sa2 = new Event("Ballet: Swan Lake", today.plusDays(100),
                              LocalTime.of(19, 30), LocalTime.of(22, 30));
         sa2.setAvailableTickets(400);
         sa2.addVenue(stadsschouwburg);
         eventRepository.save(sa2);
-        
+
         // Het Bos events
-        Event hb1 = new Event("Underground Techno", LocalDate.of(2026, 1, 31), 
+        Event hb1 = new Event("Underground Techno", today.plusDays(28),
                              LocalTime.of(22, 0), LocalTime.of(23, 59));
         hb1.setAvailableTickets(150);
         hb1.addVenue(hetBos);
         eventRepository.save(hb1);
-        
+
         // ==========================================
         // Create Events - Ghent venues
         // ==========================================
-        
+
         // De Vooruit events
-        Event vr1 = new Event("Jazz Night", LocalDate.of(2025, 12, 27), 
+        Event vr1 = new Event("Jazz Night", today.plusDays(12),
                              LocalTime.of(20, 0), LocalTime.of(23, 30));
         vr1.setAvailableTickets(150);
         vr1.addVenue(vooruit);
         eventRepository.save(vr1);
-        
-        Event vr2 = new Event("Folk & World Music", LocalDate.of(2026, 3, 22), 
+
+        Event vr2 = new Event("Folk & World Music", today.plusDays(110),
                              LocalTime.of(19, 0), LocalTime.of(22, 30));
         vr2.setAvailableTickets(250);
         vr2.addVenue(vooruit);
         eventRepository.save(vr2);
-        
-        Event vr3 = new Event("Singer-Songwriter Evening", LocalDate.of(2026, 2, 15), 
+
+        Event vr3 = new Event("Singer-Songwriter Evening", today.plusDays(48),
                              LocalTime.of(20, 0), LocalTime.of(22, 30));
         vr3.setAvailableTickets(200);
         vr3.addVenue(vooruit);
         eventRepository.save(vr3);
-        
+
         // Handelsbeurs events
-        Event hd1 = new Event("Acoustic Sessions", LocalDate.of(2026, 1, 25), 
+        Event hd1 = new Event("Acoustic Sessions", today.plusDays(22),
                              LocalTime.of(19, 0), LocalTime.of(21, 30));
         hd1.setAvailableTickets(100);
         hd1.addVenue(handelsbeurs);
         eventRepository.save(hd1);
-        
-        Event hd2 = new Event("World Jazz Fusion", LocalDate.of(2026, 2, 28), 
+
+        Event hd2 = new Event("World Jazz Fusion", today.plusDays(65),
                              LocalTime.of(20, 0), LocalTime.of(23, 0));
         hd2.setAvailableTickets(180);
         hd2.addVenue(handelsbeurs);
         eventRepository.save(hd2);
-        
+
         // NTGent events
-        Event nt1 = new Event("Contemporary Dance", LocalDate.of(2026, 2, 10), 
+        Event nt1 = new Event("Contemporary Dance", today.plusDays(38),
                              LocalTime.of(19, 30), LocalTime.of(21, 30));
         nt1.setAvailableTickets(300);
         nt1.addVenue(ntGent);
         eventRepository.save(nt1);
-        
+
         // Kinky Star events
-        Event ks1 = new Event("Local Bands Showcase", LocalDate.of(2026, 1, 18), 
+        Event ks1 = new Event("Local Bands Showcase", today.plusDays(16),
                              LocalTime.of(21, 0), LocalTime.of(23, 30));
         ks1.setAvailableTickets(80);
         ks1.addVenue(kinky);
         eventRepository.save(ks1);
-        
+
         // ==========================================
         // Create Events - Leuven venues
         // ==========================================
-        
+
         // Het Depot events
-        Event dp1 = new Event("Stand-up Comedy Night", LocalDate.of(2026, 1, 10), 
+        Event dp1 = new Event("Stand-up Comedy Night", today.plusDays(8),
                              LocalTime.of(20, 0), LocalTime.of(22, 30));
         dp1.setAvailableTickets(200);
         dp1.addVenue(hetDepot);
         eventRepository.save(dp1);
-        
-        Event dp2 = new Event("Alternative Rock Evening", LocalDate.of(2026, 2, 5), 
+
+        Event dp2 = new Event("Alternative Rock Evening", today.plusDays(40),
                              LocalTime.of(20, 0), LocalTime.of(23, 0));
         dp2.setAvailableTickets(250);
         dp2.addVenue(hetDepot);
         eventRepository.save(dp2);
-        
+
         // STUK events
-        Event st1 = new Event("Avant-Garde Performance", LocalDate.of(2026, 2, 18), 
+        Event st1 = new Event("Avant-Garde Performance", today.plusDays(52),
                              LocalTime.of(19, 30), LocalTime.of(22, 0));
         st1.setAvailableTickets(150);
         st1.addVenue(stuk);
         eventRepository.save(st1);
-        
+
         // Stelplaats events
-        Event sl1 = new Event("Electronic Underground", LocalDate.of(2026, 1, 30), 
+        Event sl1 = new Event("Electronic Underground", today.plusDays(32),
                              LocalTime.of(22, 0), LocalTime.of(23, 59));
         sl1.setAvailableTickets(500);
         sl1.addVenue(stelplaats);
         eventRepository.save(sl1);
-        
+
         // ==========================================
         // Create Events - Bruges venues
         // ==========================================
-        
+
         // Concertgebouw events
-        Event cg1 = new Event("Classical Winter Concert", LocalDate.of(2026, 1, 18), 
+        Event cg1 = new Event("Classical Concert", today.plusDays(20),
                              LocalTime.of(19, 30), LocalTime.of(22, 0));
         cg1.setAvailableTickets(800);
         cg1.addVenue(concertgebouw);
         eventRepository.save(cg1);
-        
-        Event cg2 = new Event("Symphony Orchestra Gala", LocalDate.of(2026, 3, 1), 
+
+        Event cg2 = new Event("Symphony Orchestra Gala", today.plusDays(75),
                              LocalTime.of(19, 0), LocalTime.of(21, 30));
         cg2.setAvailableTickets(900);
         cg2.addVenue(concertgebouw);
         eventRepository.save(cg2);
-        
+
         // Cactus Muziekcentrum events
-        Event cm1 = new Event("Blues Night", LocalDate.of(2026, 2, 12), 
+        Event cm1 = new Event("Blues Night", today.plusDays(44),
                              LocalTime.of(20, 0), LocalTime.of(23, 0));
         cm1.setAvailableTickets(250);
         cm1.addVenue(cactusMuziekcentrum);
         eventRepository.save(cm1);
-        
+
         // Stadsschouwburg Bruges events
-        Event sb1 = new Event("Theater: Romeo & Juliet", LocalDate.of(2026, 2, 21), 
+        Event sb1 = new Event("Theater: Romeo & Juliet", today.plusDays(62),
                              LocalTime.of(19, 0), LocalTime.of(22, 0));
         sb1.setAvailableTickets(300);
         sb1.addVenue(stadsschouwburgBruges);
         eventRepository.save(sb1);
-        
+
         // ==========================================
         // Create Events - Liège venues
         // ==========================================
-        
+
         // Reflektor events
-        Event rf1 = new Event("Hip-Hop Showcase", LocalDate.of(2026, 2, 5), 
+        Event rf1 = new Event("Hip-Hop Showcase", today.plusDays(36),
                              LocalTime.of(21, 0), LocalTime.of(23, 59));
         rf1.setAvailableTickets(600);
         rf1.addVenue(reflektor);
         eventRepository.save(rf1);
-        
-        Event rf2 = new Event("Electro Beats Festival", LocalDate.of(2026, 3, 12), 
+
+        Event rf2 = new Event("Electro Beats Festival", today.plusDays(85),
                              LocalTime.of(20, 0), LocalTime.of(23, 59));
         rf2.setAvailableTickets(800);
         rf2.addVenue(reflektor);
         eventRepository.save(rf2);
-        
+
         // Opéra Royal events
-        Event or1 = new Event("Opera: La Traviata", LocalDate.of(2026, 2, 25), 
+        Event or1 = new Event("Opera: La Traviata", today.plusDays(68),
                              LocalTime.of(19, 0), LocalTime.of(22, 30));
         or1.setAvailableTickets(500);
         or1.addVenue(operaRoyal);
         eventRepository.save(or1);
-        
-        Event or2 = new Event("Operetta Evening", LocalDate.of(2026, 3, 18), 
+
+        Event or2 = new Event("Operetta Evening", today.plusDays(95),
                              LocalTime.of(19, 30), LocalTime.of(22, 0));
         or2.setAvailableTickets(450);
         or2.addVenue(operaRoyal);
         eventRepository.save(or2);
-        
+
         // La Machine events
-        Event lm1 = new Event("Garage Rock Night", LocalDate.of(2026, 1, 24), 
+        Event lm1 = new Event("Garage Rock Night", today.plusDays(24),
                              LocalTime.of(21, 0), LocalTime.of(23, 30));
         lm1.setAvailableTickets(120);
         lm1.addVenue(laMachine);

@@ -16,8 +16,8 @@ export default function EventDetailPage() {
   if (!eventId) {
     return (
       <div className="empty-state">
-        <p>Event not found</p>
-        <Link href="/events" className="btn btn-primary" style={{ marginTop: 16 }}>Browse Events</Link>
+        <p>{t('eventDetail.notFound')}</p>
+        <Link href="/events" className="btn btn-primary" style={{ marginTop: 16 }}>{t('common.browseEvents')}</Link>
       </div>
     );
   }
@@ -33,8 +33,8 @@ export default function EventDetailPage() {
   if (!event) {
     return (
       <div className="empty-state">
-        <p>Event not found</p>
-        <Link href="/events" className="btn btn-primary" style={{ marginTop: 16 }}>Browse Events</Link>
+        <p>{t('eventDetail.notFound')}</p>
+        <Link href="/events" className="btn btn-primary" style={{ marginTop: 16 }}>{t('common.browseEvents')}</Link>
       </div>
     );
   }
@@ -68,7 +68,7 @@ export default function EventDetailPage() {
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
           <polyline points="15 18 9 12 15 6" />
         </svg>
-        Back to Events
+        {t('common.backToEvents')}
       </Link>
 
       {/* Main event card */}
@@ -94,10 +94,12 @@ export default function EventDetailPage() {
                   borderRadius: 999,
                   fontSize: 11,
                   fontWeight: 600,
-                }}>Past Event</span>
+                }}>{t('eventDetail.pastEvent')}</span>
               )}
               {hasTickets && !isPast && (
-                <span className="event-tickets-badge">{event.availableTickets} tickets available</span>
+                <span className="event-tickets-badge">
+                  {t('eventDetail.available', { count: event.availableTickets || 0 })}
+                </span>
               )}
             </div>
             <h1 className="event-detail-title">{event.title}</h1>
@@ -115,7 +117,7 @@ export default function EventDetailPage() {
               </svg>
             </div>
             <div>
-              <p className="event-detail-info-label">Time</p>
+              <p className="event-detail-info-label">{t('eventDetail.time')}</p>
               <p className="event-detail-info-value">
                 {formatTime(event.startTime)} - {formatTime(event.endTime)}
               </p>
@@ -140,13 +142,13 @@ export default function EventDetailPage() {
                 </svg>
               </div>
               <div>
-                <p className="event-detail-info-label">Venue</p>
+                <p className="event-detail-info-label">{t('eventDetail.venue')}</p>
                 <p className="event-detail-info-value">{primaryVenue.name}</p>
                 <p className="event-detail-info-sub">
                   {primaryVenue.address && <>{primaryVenue.address}<br /></>}
                   {primaryVenue.city?.name}
                   {primaryVenue.city?.region && `, ${primaryVenue.city.region}`}
-                  {primaryVenue.capacity && <><br />Capacity: {primaryVenue.capacity.toLocaleString()}</>}
+                  {primaryVenue.capacity && <><br />{t('venue.capacity')}: {primaryVenue.capacity.toLocaleString()}</>}
                 </p>
               </div>
             </div>
@@ -163,7 +165,7 @@ export default function EventDetailPage() {
                 </svg>
               </div>
               <div>
-                <p className="event-detail-info-label">Featured Artists</p>
+                <p className="event-detail-info-label">{t('eventDetail.featuredArtists')}</p>
                 <p className="event-detail-info-value">{event.eventDescription.featuredArtists}</p>
               </div>
             </div>
@@ -178,8 +180,10 @@ export default function EventDetailPage() {
                 </svg>
               </div>
               <div>
-                <p className="event-detail-info-label">Tickets</p>
-                <p className="event-detail-info-value">{event.availableTickets?.toLocaleString()} available</p>
+                <p className="event-detail-info-label">{t('eventDetail.tickets')}</p>
+                <p className="event-detail-info-value">
+                  {t('eventDetail.available', { count: event.availableTickets?.toLocaleString() || 0 })}
+                </p>
                 <a
                   href={event.eventDescription.ticketPurchaseLink}
                   target="_blank"
@@ -192,7 +196,7 @@ export default function EventDetailPage() {
                     <polyline points="15 3 21 3 21 9" />
                     <line x1="10" y1="14" x2="21" y2="3" />
                   </svg>
-                  Get Tickets
+                  {t('eventDetail.getTickets')}
                 </a>
               </div>
             </div>
@@ -202,7 +206,7 @@ export default function EventDetailPage() {
         {/* Description */}
         {event.eventDescription?.extraDescription && (
           <div className="event-detail-description">
-            <h3>About this event</h3>
+            <h3>{t('eventDetail.about')}</h3>
             <p>{event.eventDescription.extraDescription}</p>
           </div>
         )}
@@ -210,7 +214,7 @@ export default function EventDetailPage() {
         {/* All venues */}
         {event.venues && event.venues.length > 1 && (
           <div className="event-detail-description">
-            <h3>All Venues</h3>
+            <h3>{t('eventDetail.allVenues')}</h3>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
               {event.venues.map(v => (
                 <Link

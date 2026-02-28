@@ -138,16 +138,16 @@ export default function Page() {
                   <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
                   <circle cx="12" cy="10" r="3" />
                 </svg>
-                {t('home.eventsIn') || 'Events in'} {preferredCity.name}
+                {t('home.eventsIn')} {preferredCity.name}
               </h2>
-              <p className="muted small">Personalized events based on your city preference</p>
+              <p className="muted small">{t('home.upcomingSubtitle')}</p>
             </div>
             <Link href="/profile" className="btn btn-ghost btn-sm">
-              {t('home.changeCity') || 'Change city'}
+              {t('home.changeCity')}
             </Link>
           </div>
           {loading ? (
-            <p className="muted">{t('common.loading') || 'Loading...'}</p>
+            <p className="muted">{t('common.loading')}</p>
           ) : cityEvents.length > 0 ? (
             <div className="events-list">
               {cityEvents.map(event => (
@@ -156,7 +156,7 @@ export default function Page() {
             </div>
           ) : (
             <div className="empty-state">
-              <p>{t('home.noEventsInCity') || 'No upcoming events in this city'}</p>
+              <p>{t('home.noEventsInCity')}</p>
             </div>
           )}
         </section>
@@ -170,12 +170,12 @@ export default function Page() {
               <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
               <circle cx="12" cy="10" r="3" />
             </svg>
-            <h3>{t('home.personalizeTitle') || 'Personalize Your Experience'}</h3>
+            <h3>{t('home.personalizeTitle')}</h3>
             <p className="muted">
-              {t('home.personalizeDesc') || 'Set a preferred city to see events and venues tailored to you'}
+              {t('home.personalizeDesc')}
             </p>
             <Link href="/profile" className="btn btn-primary">
-              {t('home.setPreference') || 'Set Preferred City'}
+              {t('home.setPreference')}
             </Link>
           </div>
         </section>
@@ -191,11 +191,11 @@ export default function Page() {
                   <circle cx="12" cy="12" r="10" />
                   <polyline points="12 6 12 12 16 14" />
                 </svg>
-                Upcoming Events
+                {t('home.upcomingEvents')}
               </h2>
-              <p className="muted small">Don&apos;t miss what&apos;s happening next</p>
+              <p className="muted small">{t('home.upcomingSubtitle')}</p>
             </div>
-            <Link href="/events" className="btn btn-ghost btn-sm">View all events</Link>
+            <Link href="/events" className="btn btn-ghost btn-sm">{t('common.viewAllEvents')}</Link>
           </div>
           <div className="events-list">
             {upcomingEvents.map(event => (

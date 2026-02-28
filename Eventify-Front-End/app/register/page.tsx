@@ -140,7 +140,7 @@ export default function RegisterPage() {
           </div>
 
           <div className="form-group">
-            <label>{t('register.accountType') || 'Account Type'}</label>
+            <label>{t('register.accountType')}</label>
             <div style={{ display: 'flex', gap: 8 }}>
               <button
                 type="button"
@@ -153,7 +153,7 @@ export default function RegisterPage() {
                   <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
                   <circle cx="12" cy="7" r="4" />
                 </svg>
-                User
+                {t('register.roleUser')}
               </button>
               <button
                 type="button"
@@ -168,13 +168,13 @@ export default function RegisterPage() {
                   <line x1="8" y1="2" x2="8" y2="6" />
                   <line x1="3" y1="10" x2="21" y2="10" />
                 </svg>
-                Organizer
+                {t('register.roleOrganizer')}
               </button>
             </div>
             <p className="muted" style={{ fontSize: 12, marginTop: 6 }}>
               {role === 'USER'
-                ? 'Browse events and purchase tickets'
-                : 'Create and manage your own events'}
+                ? t('register.userDesc')
+                : t('register.organizerDesc')}
             </p>
           </div>
 

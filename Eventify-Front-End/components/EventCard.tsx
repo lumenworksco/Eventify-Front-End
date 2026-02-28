@@ -66,7 +66,7 @@ export default function EventCard({
           )}
         </div>
         <div className="event-card-action">
-          <span className="btn btn-ghost btn-sm">View Details</span>
+          <span className="btn btn-ghost btn-sm">{t('common.viewDetails')}</span>
         </div>
       </article>
     </Link>

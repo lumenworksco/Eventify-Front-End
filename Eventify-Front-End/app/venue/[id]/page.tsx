@@ -106,7 +106,13 @@ export default function VenuePage() {
         </div>
       )}
 
-      <div style={{ marginTop: 12 }}>
+      <div style={{ marginTop: 12, display: 'flex', gap: 8 }}>
+        <a href="/venues" className="btn btn-ghost">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <polyline points="15 18 9 12 15 6" />
+          </svg>
+          {t('nav.venues')}
+        </a>
         <a href="/events" className="btn btn-ghost">{t('venue.backToEvents')}</a>
       </div>
     </div>
