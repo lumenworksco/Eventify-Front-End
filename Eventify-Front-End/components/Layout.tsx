@@ -26,6 +26,11 @@ export default function Layout({ children }: { children: ReactNode }) {
               <li>
                 <Link href="/events">{t('nav.events')}</Link>
               </li>
+              {isAuthenticated && (
+                <li>
+                  <Link href="/profile">{t('nav.profile') || 'Profile'}</Link>
+                </li>
+              )}
               {/* Only show Add Event to ADMIN and ORGANIZER roles */}
               {isAuthenticated && hasRole(['ADMIN', 'ORGANIZER']) && (
                 <li className="nav-cta">

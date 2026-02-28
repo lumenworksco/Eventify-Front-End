@@ -20,7 +20,7 @@ interface AuthContextType {
   isLoading: boolean;
   isAuthenticated: boolean;
   login: (name: string, password: string) => Promise<{ success: boolean; error?: string }>;
-  register: (name: string, password: string) => Promise<{ success: boolean; error?: string }>;
+  register: (name: string, password: string, role?: 'USER' | 'ORGANIZER') => Promise<{ success: boolean; error?: string }>;
   logout: () => void;
   hasRole: (role: UserRole | UserRole[]) => boolean;
   setPreferredCity: (cityId: number | null) => void;
@@ -115,14 +115,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
   }, []);
 
-  const register = useCallback(async (name: string, password: string): Promise<{ success: boolean; error?: string }> => {
+  const register = useCallback(async (name: string, password: string, role: 'USER' | 'ORGANIZER' = 'USER'): Promise<{ success: boolean; error?: string }> => {
     try {
       const response = await fetch(`${API_BASE_URL}/users/register`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ name, password, cityId: 1 }),
+        body: JSON.stringify({ name, password, role, cityId: 1 }),
       });
 
       if (!response.ok) {

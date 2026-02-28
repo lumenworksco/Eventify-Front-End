@@ -80,11 +80,16 @@ public class UserController {
             // User doesn't exist, proceed with registration
         }
         
-        // Create new user with default role USER
+        // Determine role: allow USER and ORGANIZER, default to USER
+        Role role = Role.USER;
+        if (userDTO.getRole() == Role.ORGANIZER) {
+            role = Role.ORGANIZER;
+        }
+
         City city = new City();
-        city.setCityId(userDTO.getCityId() != null ? userDTO.getCityId() : 1L); // Default to city 1 if not provided
-        User user = new User(userDTO.getName(), userDTO.getPassword(), 
-                            Role.USER, 
+        city.setCityId(userDTO.getCityId() != null ? userDTO.getCityId() : 1L);
+        User user = new User(userDTO.getName(), userDTO.getPassword(),
+                            role,
                             userDTO.getLocation(), userDTO.getEventPreference(), city);
         User createdUser = userService.createUser(user);
         

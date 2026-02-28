@@ -98,6 +98,7 @@ export interface CreateTicketDTO {
 export interface RegisterDTO {
   name: string;
   password: string;
+  role?: 'USER' | 'ORGANIZER';
   cityId?: number;
   location?: string;
   eventPreference?: string;
