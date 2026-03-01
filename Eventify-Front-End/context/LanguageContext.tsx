@@ -261,7 +261,34 @@ const translations: Record<Locale, Translations> = {
     // Footer
     'footer.copyright': '© {year} Eventify',
     'footer.tagline': 'Built for learning — UCLL Full Stack',
-    
+    'footer.description': 'Discover live events, venues and experiences across Belgian cities.',
+    'footer.explore': 'Explore',
+    'footer.account': 'Account',
+
+    // Tickets
+    'tickets.buyTicket': 'Buy Ticket',
+    'tickets.loginToBuy': 'Login to buy tickets',
+    'tickets.price': 'Ticket Price',
+    'tickets.confirmPurchase': 'Confirm Purchase',
+    'tickets.purchasing': 'Purchasing...',
+    'tickets.purchaseSuccess': 'Ticket purchased successfully!',
+    'tickets.purchaseFailed': 'Failed to purchase ticket. Please try again.',
+    'tickets.cancel': 'Cancel Ticket',
+    'tickets.seat': 'Seat',
+
+    // Profile extras
+    'profile.myTickets': 'My Tickets',
+    'profile.noTickets': 'You haven\'t purchased any tickets yet.',
+
+    // Common extras
+    'common.share': 'Share',
+    'common.copied': 'Copied!',
+    'common.cancel': 'Cancel',
+
+    // 404
+    'notFound.title': 'Page not found',
+    'notFound.message': 'The page you\'re looking for doesn\'t exist or has been moved.',
+
     // Language
     'language.switch': 'Language',
     'language.en': 'English',
@@ -497,14 +524,41 @@ const translations: Record<Locale, Translations> = {
     // Footer
     'footer.copyright': '© {year} Eventify',
     'footer.tagline': 'Créé pour l\'apprentissage — UCLL Full Stack',
-    
+    'footer.description': 'Découvrez des événements, des lieux et des expériences à travers les villes belges.',
+    'footer.explore': 'Explorer',
+    'footer.account': 'Compte',
+
+    // Tickets
+    'tickets.buyTicket': 'Acheter un billet',
+    'tickets.loginToBuy': 'Connectez-vous pour acheter',
+    'tickets.price': 'Prix du billet',
+    'tickets.confirmPurchase': 'Confirmer l\'achat',
+    'tickets.purchasing': 'Achat en cours...',
+    'tickets.purchaseSuccess': 'Billet acheté avec succès !',
+    'tickets.purchaseFailed': 'Échec de l\'achat. Veuillez réessayer.',
+    'tickets.cancel': 'Annuler le billet',
+    'tickets.seat': 'Place',
+
+    // Profile extras
+    'profile.myTickets': 'Mes billets',
+    'profile.noTickets': 'Vous n\'avez pas encore acheté de billets.',
+
+    // Common extras
+    'common.share': 'Partager',
+    'common.copied': 'Copié !',
+    'common.cancel': 'Annuler',
+
+    // 404
+    'notFound.title': 'Page non trouvée',
+    'notFound.message': 'La page que vous cherchez n\'existe pas ou a été déplacée.',
+
     // Language
     'language.switch': 'Langue',
     'language.en': 'English',
     'language.fr': 'Français',
     'language.de': 'Deutsch',
   },
-  
+
   de: {
     // Navigation
     'nav.home': 'Startseite',
@@ -733,7 +787,34 @@ const translations: Record<Locale, Translations> = {
     // Footer
     'footer.copyright': '© {year} Eventify',
     'footer.tagline': 'Erstellt zum Lernen — UCLL Full Stack',
-    
+    'footer.description': 'Entdecken Sie Veranstaltungen, Orte und Erlebnisse in belgischen Städten.',
+    'footer.explore': 'Entdecken',
+    'footer.account': 'Konto',
+
+    // Tickets
+    'tickets.buyTicket': 'Ticket kaufen',
+    'tickets.loginToBuy': 'Anmelden zum Kaufen',
+    'tickets.price': 'Ticketpreis',
+    'tickets.confirmPurchase': 'Kauf bestätigen',
+    'tickets.purchasing': 'Kaufe...',
+    'tickets.purchaseSuccess': 'Ticket erfolgreich gekauft!',
+    'tickets.purchaseFailed': 'Kauf fehlgeschlagen. Bitte versuchen Sie es erneut.',
+    'tickets.cancel': 'Ticket stornieren',
+    'tickets.seat': 'Platz',
+
+    // Profile extras
+    'profile.myTickets': 'Meine Tickets',
+    'profile.noTickets': 'Sie haben noch keine Tickets gekauft.',
+
+    // Common extras
+    'common.share': 'Teilen',
+    'common.copied': 'Kopiert!',
+    'common.cancel': 'Abbrechen',
+
+    // 404
+    'notFound.title': 'Seite nicht gefunden',
+    'notFound.message': 'Die gesuchte Seite existiert nicht oder wurde verschoben.',
+
     // Language
     'language.switch': 'Sprache',
     'language.en': 'English',
